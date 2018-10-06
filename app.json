@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/dynamic/dynamic",
     "pages/index/chat/chat",
     "pages/index/index",
     "pages/product/product",
@@ -12,7 +13,7 @@
     "pages/carList/staffList/staffList",
    
     "pages/product/personal/personal",
-    "pages/dynamic/dynamic",
+    
    
     "pages/shoppingCart/shoppingCart",
     "pages/index/chatRoom/chatRoom",
