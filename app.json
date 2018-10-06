@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/index/chat/chat",
+    
     "pages/index/index",
     "pages/product/product",
     "pages/carList/carList",
@@ -10,7 +10,7 @@
     "pages/companyList/companyList",
     "component/getUserInfo/getUserInfo",
     "pages/carList/staffList/staffList",
-    
+    "pages/index/chat/chat",
     "pages/product/personal/personal",
     "pages/dynamic/dynamic",
    
