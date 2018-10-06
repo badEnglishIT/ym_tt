@@ -19,8 +19,8 @@
   <!-- 对应选项页 -->
   <view class='swiper-box'>
     <!-- 第一页 -->
-    <view class="swiper-items" wx:for="{{goodsList}}">
-      <navigator url="/pages/product/detail/detail?id={{item.id}}"
+    <view class="swiper-items">
+      <navigator wx:for="{{goodsList}}" url="/pages/product/detail/detail?id={{item.id}}"
        class='product'>
         <image src='{{item.title_img}}' mode='aspectFill'></image>
         <view class='money'>
