@@ -24,7 +24,7 @@ Page({
       return that.cardList();
     }).then(function (res) {
       console.log(res)
-      if (res.code=200) {
+      if (res.code==200) {
         that.setData({ list: res.data })
       } else {    
         that.toCompanyist();
@@ -38,6 +38,8 @@ Page({
     return new Promise(function (resolve, reject) {
       var url = app.d.hostUrl + 'Company/userRelStaffs';
       app.http(url, [], 'get', function (res) {
+        resolve(res);
+      },function(res){
         resolve(res);
       });
     })

@@ -1,10 +1,11 @@
 {
   "pages": [
+    "pages/carList/carList",
     "pages/dynamic/dynamic",
     "pages/index/chat/chat",
     "pages/index/index",
     "pages/product/product",
-    "pages/carList/carList",
+    
     "pages/uccn/uccn",
     "pages/product/detail/detail",   
     "pages/index/posterCard",
