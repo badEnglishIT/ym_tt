@@ -1,0 +1,56 @@
+<!--pages/shoppingCart/shoppingCart.wxml-->
+<view class='page'>
+  <block wx:if="{{carts==''}}">
+    <view class='main'>
+      <view class='main-y'>
+        <image src='/images/default.jpg'></image>
+        <text>这里什么都没有呀</text>
+        <button bindtap="shoppingList">去逛逛吧</button>
+      </view>
+    </view>
+  </block>
+  <block wx:elif="{{carts!=''}}">
+    <!-- <view class='free'>买满99免邮</view> -->
+    <view class="container carts-list">
+      <!--勾-->
+      <view wx:for="{{carts}}" class="carts-item" data-title="{{item.pro_name}}" id="{{item.id}}">
+        <icon wx:if="{{item.selected}}" type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" />
+        <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
+            <!--img-->
+            <view>
+                <image class="carts-image" src="{{item.title_img}}" mode="aspectFill" />
+            </view>
+            <!--文字-->
+            <view class="carts-text">
+                <text class="carts-title">{{item.title}}</text>
+                <view class="carts-subtitle">
+                    <text class="carts-price">¥ {{item.price}}</text>
+                </view>
+            </view>
+            <!--右边-->
+            <view class="title">
+                <text bindtap="delShopping" data-id="{{item.goods_id}}" class="modal-close">x</text>
+                <view class="stepper">
+                    <!-- 减号 -->
+                    <text class="{{minusStatuses[index]}}" data-index="{{index}}" 
+                    bindtap="minusNum" data-id="{{item.id}}">-</text>
+                    <!-- 数值 -->
+                    <input type="number" bindchange="bindManual" value="{{item.num}}" />
+                    <!-- 加号 -->
+                    <text class="normal" data-index="{{index}}"  data-id="{{item.id}}" bindtap="addNum">+</text>
+                </view>
+            </view>
+          </view>
+      </view>
+      <!--底部-->
+      <view class="carts-footer">
+        <view bindtap="AllCheckbox">
+            <icon wx:if="{{selectedAllStatus === true}}" type="success_circle" size="24" /> 
+            <icon wx:else type="circle" size="24" />
+            <text>全选</text>
+            <text class="reds">¥{{total}}</text>
+        </view>
+        <view class="button" bindtap='bindCheckout'>立即结算 </view>
+      </view>
+  </block>
+</view>

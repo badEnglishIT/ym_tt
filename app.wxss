@@ -1,0 +1,80 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+/* 字体图标 */
+/* 字体图标 */
+@font-face {
+  font-family: 'iconfont';  /* project id 787991 */
+  src: url('//at.alicdn.com/t/font_787991_0lknx2u1tttr.eot');
+  src: url('//at.alicdn.com/t/font_787991_0lknx2u1tttr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_787991_0lknx2u1tttr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_787991_0lknx2u1tttr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_787991_0lknx2u1tttr.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:1rem;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-flex;
+}
+
+.icon-xin:before { content: "\e613"; }
+
+.icon-28dianzan:before { content: "\e651";font-size: 1rem  }
+
+.icon-28dianzanfill:before { content: "\e652";font-size: 1rem }
+
+.icon-icon_arrow_top:before { content: "\e60e";color: #575757;font-size: .7rem }
+
+.icon-jiantouxia:before { content: "\e61e";color: #575757;font-size: .7rem }
+
+.icon-icon_more:before { content: "\e61a"; }
+
+.icon-pinglun1:before { content: "\e66c"; }
+
+.icon-stop:before { content: "\e827"; }
+
+.icon-icon--:before { content: "\e653"; }
+
+.icon-dianzan:before { content: "\e627"; }
+
+.icon-mn_xingxing:before { content: "\e600"; }
+
+.icon-mn_xingxing_fill:before { content: "\e601"; }
+
+.icon-weibiaoti-:before { content: "\e60b"; }
+
+.icon-pengyouquan-copy:before { content: "\e659"; }
+
+.icon-logo-wechat:before { content: "\e619"; }
+
+.icon-weibiaoti2fuzhi12:before { content: "\e629"; }
+
+.icon-gouwuche:before { content: "\e73d"; }
+
+.icon-share:before { content: "\e617"; }
+
+.icon-youjian:before { content: "\e62b"; }
+
+.icon-dianhua:before { content: "\e611"; }
+
+.icon-msnui-pos:before { content: "\e630"; }
+
+.icon-add:before { content: "\e602"; }
+
+.icon-biaoqing-copy:before { content: "\e603"; }
+
+.icon-zixun:before { content: "\e621"; }
+
+.icon-dianpu:before { content: "\e618"; }

@@ -1,0 +1,13 @@
+<!--component/getUserInfo/getUserInfo.wxml-->
+<view hidden='{{bo}}'>
+  <view  class='murky'></view>
+  <view  class='login'>
+    <view class='logInfo'>
+      <view style='font-size:1rem;margin-bottom:1rem;color:#000;font-weight:600;'>登录并授权</view>
+      <view>申请获得以下权限</view>
+      <view>获得你的公开信息(昵称,头像)</view>
+    </view>
+    <button class='logBtn' bindgetuserinfo="getUserInfo" open-type="getUserInfo" disabled="{{disabled}}">允许</button>
+  </view>
+</view>
+

@@ -1,0 +1,35 @@
+<!--pages/product/product.wxml-->
+<view class='page'>
+  <view class='title'>
+    <view>
+      <icon class='iconfont icon-share'></icon>
+    </view>
+  </view>
+  <!-- 选项卡 -->
+  <view class="swiper-tab">
+  <view class=" {{currType=='' ? 'on' : ''}}" data-curr=""
+   catchtap="swichNav">
+      <text >全部商品</text>
+    </view> 
+   <view class="{{currType==index ? 'on' : ''}}" data-curr="{{index}}"
+    catchtap="swichNav" wx:for="{{typeList}}">
+      <text >{{item.name}}</text>
+    </view> 
+  </view>
+  <!-- 对应选项页 -->
+  <view class='swiper-box'>
+    <!-- 第一页 -->
+    <view class="swiper-items" wx:for="{{goodsList}}">
+      <navigator url="/pages/product/detail/detail?id={{item.id}}"
+       class='product'>
+        <image src='{{item.title_img}}' mode='aspectFill'></image>
+        <view class='money'>
+          <view class='I'>{{item.title}}</view>
+          <view class='III'>￥{{item.price}}</view>       
+        </view>
+      </navigator>
+    </view> 
+  </view>
+</view>
+
+

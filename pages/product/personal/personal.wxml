@@ -1,0 +1,55 @@
+<!--pages/My/My.wxml-->
+<!-- 头部 -->
+<view class='page'>
+  <view class="container">
+    <view class="userinfo" wx:if="{{userInfo}}">
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+    <!-- <view class="userinfo" wx:else>      
+        <button style="height:100rpx;top:50rpx;" bindgetuserinfo="login" open-type="getUserInfo">用户登陆</button>
+    </view> -->
+  </view>
+  <!-- 收货 付款 待付款 订单 -->
+  <view class='Gr'>
+    <view class='my_order'>
+      <view style='font-size:1rem'>我的订单</view>
+      <view style='font-size:.7rem' data-state="40" bindtap="orderTab">查看全部订单</view>
+    </view>
+    <view class='xian'></view>
+    <view class='payment' data-state="10" bindtap="orderTab">
+      <image src='/images/wallet1.png'></image>
+      <text>待付款</text>
+    </view>
+    <view class='payment'  data-state="20" bindtap="orderTab">
+      <image src='/images/sign1.png'></image>
+      <text>待发货</text>
+    </view>
+    <view class='payment'  data-state="30" bindtap="orderTab">
+      <image src='/images/cart1.png'></image>
+      <text>已发货</text>
+    </view>
+    <view class='payment'  data-state="40" bindtap="orderTab">
+      <image src='/images/discuss1.png'></image>
+      <text>已完成</text>
+    </view>
+    <view class='payment'  data-state="50" bindtap="orderTab">
+      <image style='height:1.7rem;width:1.7rem;padding: .2rem;' src='/images/sale1.png'></image>
+      <text>退款/售后</text>
+    </view>
+  </view>
+  <view class='main'>
+    <view class='mian_sub'>
+      <view class='sub_file' bindtap='membership'>我的会员卡<text>>></text></view>
+      <!-- <view class='sub_file' bindtap='distribution'>我的分销<text>>></text></view> -->
+      <view class='sub_file' bindtap='myCollection'>我的收藏<text>>></text></view>
+      <view class='sub_file' bindtap='integral'>我的积分<text>>></text></view>
+      <!-- <view class='sub_file' bindtap='myCollection'>我的收藏<text>>></text></view> -->
+      <view class='sub_file' bindtap='coupon'>我的礼劵<text>>></text></view>
+      <view class='sub_file' bindtap='address'>收货地址<text>>></text></view>
+      <!-- <view class='sub_file'>绑定手机<text>>></text></view> -->
+      <!-- <view class='sub_file' bindtap="shopEnter">申请店铺入驻<text>>></text></view> -->
+      <view session-from="weapp" bindtap='call' open-type='contact' class='sub_file' style='border-bottom:none;' >联系客服<text>>></text></view>
+    </view>
+  </view>
+</view>

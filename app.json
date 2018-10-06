@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/index/chat/chat",
+    "pages/index/index",
+    "pages/product/product",
+    "pages/carList/carList",
+    "pages/uccn/uccn",
+    "pages/product/detail/detail",   
+    "pages/index/posterCard",
+    "pages/companyList/companyList",
+    "component/getUserInfo/getUserInfo",
+    "pages/carList/staffList/staffList",
+    
+    "pages/product/personal/personal",
+    "pages/dynamic/dynamic",
+   
+    "pages/shoppingCart/shoppingCart",
+    "pages/index/chatRoom/chatRoom",
+    
+    
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "强推",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#1afa29",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "卡片",
+        "iconPath": "/images/card.png",
+        "selectedIconPath": "/images/card1.png"
+      },
+      {
+        "pagePath": "pages/product/product",
+        "text": "产品",
+        "iconPath": "/images/product.png",
+        "selectedIconPath": "/images/product1.png"
+      },
+      {
+        "pagePath": "pages/dynamic/dynamic",
+        "text": "动态",
+        "iconPath": "/images/dynamic.png",
+        "selectedIconPath": "/images/dynamic1.png"
+      },
+      {
+        "pagePath": "pages/uccn/uccn",
+        "text": "官网",
+        "iconPath": "/images/uccn.png",
+        "selectedIconPath": "/images/uccn1.png"
+      }
+    ]
+  }
+}

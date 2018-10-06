@@ -1,0 +1,2 @@
+<!--pages/uccn/uccn.wxml-->
+<rich-text nodes="{{details}}"></rich-text>

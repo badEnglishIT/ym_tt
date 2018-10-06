@@ -1,0 +1,90 @@
+<!--pages/goods/details/details.wxml-->
+<import src="../wxParse/wxParse.wxml"/>
+<view class='iconBar'>
+  <icon bindtap='toShoppingCart' class='iconfont icon-gouwuche'></icon>
+  <icon class='iconfont icon-weibiaoti2fuzhi12'></icon>
+  <icon class='iconfont icon-share'></icon>
+</view>
+<swiper class='swiper_box' indicator-dots='true' autoplay='true' circular='true'>
+  <swiper-item wx:for='{{banners}}'>
+    <image src='{{item}}'/>
+  </swiper-item>
+</swiper>
+<view class='synopsis'>
+  <view class='view1'>{{title}}</view>
+  <view class='view2'>
+    <text>库存:{{inventory}}</text>
+    <text bindtap='toCrowd' data-id="{{id}}" style='font-size:.9rem'><!-- 众筹  --></text>
+  </view>
+  <view class='view3'>
+    <text class='f16'>￥{{price}}</text>
+    <text><!-- 生产地 --></text>
+  </view>
+</view>
+
+<view class='details'>
+  <view class='solo' style='height:40px;border-bottom:1px solid #ccc;'>
+    <view bindtap='showBox' data-tspe='0' class='ima_text'>
+      <text class='{{tspe==0?"show_se":"hide_se"}}'>图文详情</text>
+    </view>
+    
+    
+  </view>
+  <rich-text nodes="{{details}}"></rich-text>
+  <view class='{{tspe==2?"show":"hide"}}'>
+    <image class='imgs' src='/images/default.jpg'></image>
+    <image class='imgs' src='/images/default.jpg'></image>
+    <image class='imgs' src='/images/default.jpg'></image>
+  </view>
+</view>
+
+<view class='Shopping'>
+  <view class='collection' bindtap="cp_shopping" data-id="{{id}}">
+    <image src='/images/home.png'></image>
+    <text>收藏</text>
+  </view>
+  <view class='cts'>
+    <contact-button  session-from="weapp">
+    </contact-button>
+    <text>客服</text>
+  </view>
+  <view class='join' bindtap="addGoods">
+    <text>加入购物车</text>
+  </view>
+  <view class='immediately' bindtap='setModalStatus' data-status="1">
+    <text>立即购买</text>
+  </view>
+</view>
+<!-- 立即购买 -->
+<view class="drawer_screen" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_attr_box" wx:if="{{showModalStatus}}">
+    <view class="close_icon" bindtap="setModalStatus" data-status="0">×</view>
+    <view class="drawer_attr_content">
+        <view class="text_center">
+            <image class="drawer_image" src="{{title_img}}"></image>
+            <view class="mingcheng">
+                <view>{{title}}</view>
+                <view style="font-size:29rpx;color:red">¥ {{price*buynum}}</view>
+                <view style="font-size:26rpx;color:#ccc">库存：{{inventory-buynum}}</view>
+            </view>
+        </view>
+        
+        <view class="shu">
+            <text class="cun">购买数量</text>
+            <view class="dian">
+                <view class="stepper">
+
+                    <!-- 减号 -->
+                    <text class="{{minusStatuses[index]}}" data-alpha-beta="0" bindtap="changeNum">-</text>
+                    <!-- 数值 -->
+                    <view class="nownum">{{buynum}}</view>
+                    <!-- 加号 -->
+                    <text class="normal" data-alpha-beta="1" bindtap="changeNum">+</text>
+                </view>
+            </view>
+        </view>
+        <view class="footc" bindtap="Confirm" data-type="buynow">
+            立即购买
+        </view>
+    </view>
+</view>

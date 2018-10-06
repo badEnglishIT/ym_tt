@@ -1,0 +1,24 @@
+<!--pages/carList/carList.wxml-->
+<getUserInfo auth="{{authCall}}"></getUserInfo>
+<view class='page' wx:if="{{list.length}}">
+  <view wx:for="{{list}}" class='cards' data-id="{{item.id}}" 
+  data-company_id="{{item.company_id}}" bindtap="toIndex">
+    <view class='info'>
+      <view class='infoText'>
+        <text class='t1'>{{item.company_name}}</text>
+        <text class='t2'>{{item.nickname}}</text>
+        <text class='t3'>{{item.info.job_title}}</text>
+        <text class='t4'>{{item.info.tel}}</text>
+      </view>
+      <image src='{{item.photo}}'></image>
+    </view>
+    <view class='set'>
+      <text>NO.{{index+1}}</text>
+      <view class='setBtn'>
+        <view>置顶</view>
+        <view>屏蔽</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view wx:else>您还未获得卡片</view>

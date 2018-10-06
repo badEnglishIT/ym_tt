@@ -1,0 +1,72 @@
+/* pages/carList/staffList/staffList.wxss */
+page{
+  background: #F6F8F8;
+}
+.page{
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.cards{
+  width: 100%;
+  height: 25vh;
+  background: #fff;
+  border-radius: .3rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+.info{
+  display: flex;
+  justify-content: space-between;
+}
+.infoText{
+  display: flex;
+  flex-flow: column nowrap;
+}
+.t1{
+  font-size: .8rem;
+  margin-bottom: 1rem;
+  color: #575757;
+}
+.t2{
+  font-size: 1rem;
+  margin-bottom: .2rem;
+  color: #000;
+}
+.t3{
+  font-size: .6rem;
+  margin-bottom: .5rem;
+  color: #000;
+}
+.t4{
+  font-size: .6rem;
+  margin-bottom: .5rem;
+  color: #575757;
+}
+.info image{
+  width: 3rem;
+  height: 3rem;
+}
+.set{
+  display: flex;
+  justify-content: space-between;
+}
+.set text{
+  color: #7CD43A;
+  font-size: .8rem;
+}
+.setBtn{
+  display: flex;
+  justify-content: space-between;
+  width:32%;
+}
+.setBtn view{
+  font-size: .6rem;
+  color: #ddd;
+  border: 1rpx solid #ddd;
+  border-radius: .2rem;
+  background: #f8f8f8;
+  padding: .2rem .5rem;
+}

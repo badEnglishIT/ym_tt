@@ -1,0 +1,23 @@
+/* pages/companyList/companyList.wxss */
+page{
+  background: #F6F8F8;
+}
+.page{
+  padding: .5rem 1rem;
+}
+.list{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  padding: .5rem;
+  box-shadow:0px 0px 10px 3px #DCDCDD;
+  border-radius:.3rem;
+  margin-bottom:1rem;
+  box-sizing:border-box;
+}
+.list image{
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+}

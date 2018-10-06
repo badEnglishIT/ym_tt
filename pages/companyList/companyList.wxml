@@ -1,0 +1,7 @@
+<!--pages/companyList/companyList.wxml-->
+<view class='page'>
+  <view wx:for='{{list}}' class='list' data-id="{{item.id}}" bindtap="toStaffs">
+    <image src='{{item.logo}}'></image>
+    <text>{{item.company_name}}</text>
+  </view>
+</view>

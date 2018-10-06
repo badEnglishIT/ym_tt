@@ -1,0 +1,49 @@
+<!--pages/dynamic/dynamic.wxml-->
+<view class='dynamic'>
+  <image src='/images/bosco1.jpg'></image>
+  <view class='box'>
+    <view class='a'>
+      <text style='color:#626F9C;font-weight:600;'>Bosco</text>
+      <text style='color:#626F9C;font-size:.6rem'>转发</text>
+    </view>
+    <view class='t'>阿萨德法师打发阿萨德阿士大夫撒旦法师打发啥的发士大夫撒旦法撒旦分阿斯顿发士大夫撒旦法撒旦法阿斯顿发士大夫撒旦阿</view>
+    <!-- <view class='{{imgs.length>1&&imgs.length!=4?"m":"f"}}'> -->
+    <view class='{{ imgs.length==1? "p" : imgs.length==4? "f" : "m" }}'>
+      <image data-src="{{item.img}}" bindtap='preview' wx:for='{{imgs}}' src='{{item.img}}' mode='{{imgs.length==1?"aspectFill":"aspectFill"}}'></image>
+    </view>
+    <view class='pl'>
+      <text>33天前</text>
+      <image src='/images/pl.png'></image>
+    </view>
+    <view class='ly'>
+      <view class='like'>
+        <icon class='iconfont .icon-xin'></icon>
+        <text>阿萨德,</text>
+        <text>的撒爱上,</text>
+        <text>范德萨,</text>
+        <text>客家话,</text>
+        <text>范德萨,</text>
+        <text>客家话</text>
+      </view>
+      <view class='message'>
+        <view><text>阿萨德: </text>阿士大夫撒旦法撒旦飞洒地方撒旦</view>
+        <view><text>Bosco</text>回复<text>阿萨德: </text>阿士大夫撒旦法撒旦飞洒地方撒旦</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class='dynamic'>
+  <image src='/images/bosco1.jpg'></image>
+  <view class='box'>
+    <view class='a'>
+      <text style='color:#626F9C;font-weight:600;'>黄宗泽</text>
+      <text style='color:#626F9C;font-size:.6rem'>转发</text>
+    </view>
+    <view class='t'>阿萨德法师打发阿萨德阿士大夫撒旦法师打发啥的发士大夫撒旦法撒旦分阿斯顿发士大夫撒旦法撒旦法阿斯顿发士大夫撒旦阿</view>
+    <view class='p'>
+        <image src='/images/bosco1.jpg' mode='widthFix' style='max-height:13rem;max-width:60%'></image>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,110 @@
+<!--index.wxml-->
+<getUserInfo auth="{{authCall}}" wx:if="{{check}}"></getUserInfo>
+<view bindtap="close">
+<view class='page'>
+  <view class='card'>
+    <view class='comp'><image src='/images/dynamic1.png'></image>
+    <text>{{company_name}}</text></view>
+    <view class='person'>
+      <image src='{{photo}}' mode='aspectFill'></image>
+      <view><text style='font-weight:600;'>{{job_title}}</text><text style='font-size:.9rem'>{{nickname}}</text></view>
+    </view>
+    <view class='card_info'>
+      <view>
+        <icon class='iconfont icon-dianhua'></icon>
+        <text bindtap='call' data-phone='{{tel}}'>{{tel}}</text>
+      </view>
+      <view>
+        <icon class='iconfont icon-youjian'></icon>
+        <text bindtap='copy' data-cont='{{mail}}'>{{mail}}</text>
+      </view>
+      <view>
+        <icon class='iconfont icon-msnui-pos'></icon>
+        <text style='vertical-align: top'>{{address}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+  <view bindtap='toTalk' class='chat'>
+    <icon class='iconfont icon-icon--'></icon>
+    <text>消息</text>
+  </view>
+
+  <view class='more' bindtap='more'>
+    <text>{{toggle?'收起以下名片信息':'展开全部名片信息'}}</text>
+    <icon class='iconfont {{toggle?"icon-icon_arrow_top":"icon-jiantouxia"}}'></icon>
+  </view>
+  <view class='more_info' style='{{toggle?"display:block":"display:none"}}'>
+    <view>
+      <text class='t1'>电话</text>
+      <text class='t2'>{{tel}}</text>
+      <text class='t3' bindtap='call' data-phone='{{phone}}'>拨打</text>
+    </view>
+     <view>
+      <text class='t1'>微信</text>
+      <text class='t2'>{{wechat}}</text>
+      <text class='t3' bindtap='copy' data-cont='{{wechat}}'>复制</text>
+    </view>
+     <view>
+      <text class='t1'>邮箱</text>
+      <text class='t2'>{{mail}}</text>
+      <text class='t3' bindtap='copy' data-cont='{{mail}}'>复制</text>
+    </view>
+    <view>
+      <text class='t1'>公司</text>
+      <text class='t2'>{{company_name}}</text>
+      <text class='t3' bindtap='copy' data-cont='{{company_name}}'>复制</text>
+    </view>
+    <view>
+      <text class='t1'>地址</text>
+      <text class='t2'>{{address}}</text>
+      <text class='t3' bindtap='copy' data-cont='{{address}}'>复制</text>
+    </view>
+  </view>
+  <view class='share'>
+    <text catchtap='choose'>分享名片</text>
+    <text bindtap='addPhone'>存入手机通讯录</text>
+  </view>
+
+  <!-- 选择分享方式 -->
+    <view hidden='{{murky}}' animation="{{translateX}}" class='shareWay '>
+      <view>
+        <icon class='iconfont icon-logo-wechat'></icon>
+        <text>微信好友</text>
+      </view>
+      <view bindtap="toPosterCard">
+        <icon class='iconfont icon-pengyouquan-copy'></icon>
+        <text>名片海报</text>
+      </view>
+    </view>
+    
+  <!-- /选择分享方式 -->
+
+  <view class='like'>
+    <view class='m'>
+      <view>
+        <image wx:for='{{look_card_user}}' src='{{item.photo}}'></image>
+      </view>
+      <text>{{look_card_cnt}}人浏览</text>
+    </view>
+    <view class='l'>
+      <icon animation="{{scale}}" wx:if="{{is_click_like}}" 
+      class='iconfont icon-28dianzanfill'></icon>
+      <icon animation="{{scale}}" wx:else 
+      class='iconfont icon-28dianzan' bindtap='like'></icon>
+      <text>喜欢 {{click_like_cnt}}</text>
+    </view>
+  </view>
+  <view class='cont'>
+    <view class='my_info'>
+      <text>我的个人简介</text>
+      {{intro}}
+    </view>
+    <view class='photo'>
+      <text style='padding:.5rem 1rem;background:#fff;'>我的照片</text>
+      <image src='{{item}}' mode='aspectFill' 
+      wx:for="{{photo_wall}}"></image>
+    </view>
+  </view>
+  </view>
