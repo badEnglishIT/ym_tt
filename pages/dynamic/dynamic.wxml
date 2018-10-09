@@ -1,4 +1,5 @@
 <!--pages/dynamic/dynamic.wxml-->
+<view hidden='{{murky}}' bindtap='close' class='murky' id='murky'></view>
 <view class='dynamic'>
   <image src='/images/bosco1.jpg'></image>
   <view class='box'>
