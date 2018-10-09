@@ -16,6 +16,7 @@ page{
   padding: 1rem;
   box-sizing: border-box;
   margin-bottom: 1rem;
+  box-shadow:0px 0px 10px 2px #DCDCDD;
 }
 .info{
   display: flex;
@@ -69,4 +70,9 @@ page{
   border-radius: .2rem;
   background: #f8f8f8;
   padding: .2rem .5rem;
+}
+.NOTFOUND{
+  text-align: center;
+  line-height: 3rem;
+  border: 1px solid #000;
 }

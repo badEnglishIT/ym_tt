@@ -21,4 +21,7 @@
     </view>
   </view>
 </view>
-<view wx:else>您还未获得卡片</view>
+<view wx:else>
+  <!-- <view class='NOTFOUND'>404 NOT FOUND</view>
+  <view style='text-align:center;line-height: 2rem;'>Please authorize</view> -->
+</view>

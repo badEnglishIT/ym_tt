@@ -1,2 +1,5 @@
 <!--pages/index/posterCard.wxml-->
-<canvas canvas-id="firstCanvas" style="width: {{width}}px; height: {{height}}px;border:1px solid black;"></canvas>
+<canvas 
+  style="margin:5vh auto;width: {{width}}px; height: {{height}}px;border-radius:1rem;box-shadow:0px 0px 10px 2px #DCDCDD;" 
+  canvas-id="firstCanvas">
+</canvas>
