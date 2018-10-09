@@ -148,8 +148,7 @@ Page({
     var animation = wx.createAnimation({     //底部弹出层   点击弹出
       transformOrigin: "50% 50%",
       duration: 500,
-      timingFunction: "linear",
-      delay: 0
+      timingFunction: "linear"
     })
     animation.translateY(-120).step();
     that.setData({
