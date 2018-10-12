@@ -12,6 +12,10 @@ App({
     sessionid: 't15nVlrMxSrbtYyK3X8X7y0EZS4cPfP8jgGEd8zG1diBIRe5PX3nxdaMX80FPV85',//通信ID
     staffId:83,//员工ID
     companyId:1,//公司ID
+    loginInfo: {//登录用户的基本信息
+      id: 83,
+      nickname: '123'
+    },
   },  
   onLaunch: function () {
   },

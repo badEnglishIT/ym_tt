@@ -1,50 +1,61 @@
 <!--pages/dynamic/dynamic.wxml-->
 <view hidden='{{murky}}' bindtap='close' class='murky' id='murky'></view>
-<view class='dynamic'>
-  <image src='/images/bosco1.jpg'></image>
-  <view class='box'>
-    <view class='a'>
-      <text style='color:#626F9C;font-weight:600;'>Bosco</text>
-      <text style='color:#626F9C;font-size:.6rem'>转发</text>
-    </view>
-    <view class='t'>阿萨德法师打发阿萨德阿士大夫撒旦法师打发啥的发士大夫撒旦法撒旦分阿斯顿发士大夫撒旦法撒旦法阿斯顿发士大夫撒旦阿</view>
-    <!-- <view class='{{imgs.length>1&&imgs.length!=4?"m":"f"}}'> -->
-    <view class='{{ imgs.length==1? "p" : imgs.length==4? "f" : "m" }}'>
-      <image data-src="{{item.img}}" bindtap='preview' wx:for='{{imgs}}' src='{{item.img}}' mode='{{imgs.length==1?"aspectFill":"aspectFill"}}'></image>
-    </view>
-    <view class='pl'>
-      <text>33天前</text>
-      <image src='/images/pl.png'></image>
-    </view>
-    <view class='ly'>
-      <view class='like'>
-        <icon class='iconfont .icon-xin'></icon>
-        <text>阿萨德,</text>
-        <text>的撒爱上,</text>
-        <text>范德萨,</text>
-        <text>客家话,</text>
-        <text>范德萨,</text>
-        <text>客家话</text>
+<scroll-view style='height:100vh' lower-threshold='50' bindscrolltolower='loadMore' scroll-y class='page'>
+  <view wx:for='{{allDynamic}}' class='dynamic'>
+    <image src='{{item.photo}}'></image>
+    <view class='box'>
+      <view class='a'>
+        <text style='color:#626F9C;font-weight: 600;'>{{item.nickname}}</text>
+        <text style='color:#626F9C;font-size:.6rem'>转发</text>
       </view>
-      <view class='message'>
-        <view><text>阿萨德: </text>阿士大夫撒旦法撒旦飞洒地方撒旦</view>
-        <view><text>Bosco</text>回复<text>阿萨德: </text>阿士大夫撒旦法撒旦飞洒地方撒旦</view>
+      <view class='t'>{{item.details}}</view>
+
+      <view class='{{ item.imgs.length==1? "p" : item.imgs.length==4? "f" : "m" }}'>
+        <image wx:for='{{item.imgs}}' wx:for-item='imgs' data-src="{{imgs}}" bindtap='preview' src='{{imgs}}' 
+        mode='{{imgs.length==1?"aspectFill":"aspectFill"}}'></image>
       </view>
+
+      <!-- <view class='article' data-id='{{item.id}}' bindtap='toDetail'>
+        <image src='/images/bosco1.jpg'></image>
+        <text>{{item.title}}</text>
+      </view> -->
+
+      <view class='pl'>
+        <text class='time'>{{item.add_time}}</text>
+        <view class='info'>
+          <view class='infoBox'>
+            <view animation="{{item.id==thisDH?animationData:''}}">
+              <view bindtap='clickLike' data-id='{{item.id}}' data-isLike='{{item.is_like}}' 
+              data-index="{{index}}" class='zan'>
+                <icon class='iconfont icon-xin'></icon>
+                <text style='color:#fff;margin-left:.3rem;'>{{item.is_like? "取消":"赞"}}</text>
+              </view>
+              <view bindtap='clickMsg' class='zan'>
+                <icon class='iconfont icon-pinglun'></icon>
+                <text style='color:#fff;margin-left:.3rem;'>评论</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <image src='/images/pl.png' data-id='{{item.id}}' bindtap='showPl'></image>
+      </view>
+
+      <view wx:if='{{item.showLike||item.commList.length!=0}}' class='ly'>
+        <view wx:if='{{item.showLike}}' class='like'>
+          <icon class='iconfont .icon-xin'></icon>
+          <text wx:for='{{item.user_like}}' wx:for-item="user_like">{{user_like}}</text>
+        </view>
+        <view class='message' 
+        style='{{item.showLike && item.commList.length!=0? "border-top: 1rpx solid #ccc;":"border-top: none"}}'>
+          <view wx:for='{{item.commList}}' wx:for-item="commList">
+            <text style='color: #626F9C; font-weight:600;'>{{commList.nickname}}: </text>
+            <text>{{commList.msg}}</text>
+          </view>
+        </view>
+      </view>
+
     </view>
   </view>
-</view>
 
-
-<view class='dynamic'>
-  <image src='/images/bosco1.jpg'></image>
-  <view class='box'>
-    <view class='a'>
-      <text style='color:#626F9C;font-weight:600;'>黄宗泽</text>
-      <text style='color:#626F9C;font-size:.6rem'>转发</text>
-    </view>
-    <view class='t'>阿萨德法师打发阿萨德阿士大夫撒旦法师打发啥的发士大夫撒旦法撒旦分阿斯顿发士大夫撒旦法撒旦法阿斯顿发士大夫撒旦阿</view>
-    <view class='p'>
-        <image src='/images/bosco1.jpg' mode='widthFix' style='max-height:13rem;max-width:60%'></image>
-    </view>
-  </view>
-</view>
+  <i-load-more tip='{{tip}}' loading="{{ load }}"/>
+</scroll-view>

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/carList/carList",
     "pages/dynamic/dynamic",
+    "pages/carList/carList",
     "pages/index/chat/chat",
     "pages/index/index",
     "pages/product/product",
