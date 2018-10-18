@@ -1,6 +1,8 @@
 <!--pages/product/product.wxml-->
 <view class='page'>
   <view class='title'>
+    <image src="{{companyInfo.logo}}" style="width:70px;" mode='widthFix'></image>
+    <view>{{companyInfo.company_name}}</view>
     <view>
       <icon class='iconfont icon-share'></icon>
     </view>

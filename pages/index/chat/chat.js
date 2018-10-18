@@ -1,10 +1,68 @@
 // pages/index/chat/chat.js
 // const app = getApp();
 const { emojis, emojiToPath, textToEmoji } = require('../../../utils/emojis');
+//定义worker进程变量
+var worker='';
+//引用CryptoJS加密插件
+const CryptoJS = require('../../../utils/aes.min.js');
+const app = getApp();
 const inputHeight = 51;
 const emojiHeight = 171;
 const timeouts = [];
 let windowHeight;
+//消息对象
+const msg={
+  //文本消息
+  text: function (msg) {
+    var data = { 'type': 'text', 'msg': msg };
+    this.send(data);
+  },
+  //图片消息
+  image: function (src) {
+    var data = { 'type': 'image', 'src': src };
+    this.send(data);
+  },
+  //商品消息
+  goods: function () {
+    var data = {
+      'type': 'goods',
+      'title': title,
+      'title_img': src,
+      'price': price
+    };
+    this.send(data);
+  },
+  //心跳消息
+  ping: function () {
+    var data = { 'type': 'ping', 'msg': '233' };
+    this.send(data);
+  },
+  //关闭通讯
+  close:function(){
+    var data={'x':'123'};
+    this.send(data);
+  },
+  //登录消息
+  login: function () {
+    var data = {
+      'type': 'login',
+      'from_uid': app.globalData.loginInfo.id,
+      'to_uid': app.globalData.staffId,
+      'grade': 'user',
+      'key': app.globalData.loginInfo.sessionid
+    };
+    this.send(data);
+  },
+  //发送消息
+  send: function (data) {
+    var msg = JSON.stringify(data);
+    console.log('发送：' + msg);
+    wx.sendSocketMessage({ 'data': msg });
+    worker.postMessage({
+      'handle':'clear'
+    })
+  },
+};
 Page({
   data: {
     userInfo: {},
@@ -18,10 +76,33 @@ Page({
     chatList: [],
   },
   onLoad: function () {
-    // 获取用户信息
-    // app.getUserInfo(userInfo => {
-    //   this.setData({ userInfo })
-    // });
+    var that=this;  
+    //创建worker进程
+    worker = wx.createWorker('workers/fib/index.js');
+    //获取worker进程返回的消息
+    worker.onMessage((res) => {
+      console.log(res)
+      //发送心跳
+      if (res.handle == 'ping') msg.ping();
+    })
+    //创建WebSocket
+    wx.connectSocket({
+      url:"wss://dc.ymhmjj.com:4431/webSocketServer?token="+this.token(),
+    })
+    //连接WebSocket成功
+    wx.onSocketOpen(function(e){
+      console.log('连接成功')
+      msg.login()   
+    })
+    //监听WebSocket 接受到服务器的消息
+    wx.onSocketMessage(function(e){
+      console.log(e)
+    })
+    //监听WebSocket 服务器的连接关闭
+    wx.onSocketClose(function(e){
+      console.log(e)
+    })
+    
     // 获取表情包
     const emojiList = Object.keys(emojis).map(key => ({
       key: key,
@@ -46,6 +127,19 @@ Page({
       scrollHeight,
       chatList,
     })
+  },
+  //获取WebSocket通讯凭证
+  token:function(){
+    var text = app.globalData.loginInfo.sessionid + (Date.parse(new Date()) / 1000);
+    //注意密钥的个数是4的倍数
+    var key = CryptoJS.enc.Utf8.parse('1aA.5-x@cxbv7856');
+    var ciphertext = CryptoJS.AES.encrypt(text, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.ZeroPadding
+    }).toString();
+    var words = CryptoJS.enc.Utf8.parse(ciphertext);
+    //base64加密编码，避免提交后台的时候包含转义字符导致解码失败 
+    return CryptoJS.enc.Base64.stringify(words)
   },
   onUnload: function () {
     // 清除定时器
@@ -195,100 +289,11 @@ Page({
       urls: [e.currentTarget.id]
     })
   },
-
+  //监听页面卸载
+  onUnload:function(){
+    //删除worker进程
+    worker.terminate();
+    //删除WebSocket进程
+    msg.close();
+  }
 })
-// Page({
-
-//   /**
-//    * 页面的初始数据
-//    */
-//   data: {
-//     last:'last',
-//     maxHeight:85,
-//     emojiList: [],
-//     showEmojis:false,
-//     myAvatar:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=578306307,856999526&fm=111&gp=0.jpg',
-//     msg:'',
-//   },
-//   //自定义事件
-//   //获取输入的内容
-//   getVal:function(e){
-//     console.log({ '功能': "失去焦点获得输入的值", 'e': e });
-//     this.setData({
-//       msg: e.detail.value
-//     });
-//   },
-//   // 选择图片
-//   upImg:function(e){
-//     console.log({ '功能': "选择图片", 'e': e });
-//     wx.chooseImage({
-//       success: function(res) {
-        
-//       },
-//     })
-//   },
-//   //表情框
-//   showEmojiBox:function(e){
-//     var that = this;
-//     that.setData({showEmojis: !that.data.showEmojis});
-//     const emojiList = Object.keys(emojis).map(key => ({
-//       key: key,
-//       img: emojiToPath(key)
-//     }))
-//   },
-//   /**
-//    * 生命周期函数--监听页面加载
-//    */
-//   onLoad: function (options) {
-  
-//   },
-
-//   /**
-//    * 生命周期函数--监听页面初次渲染完成
-//    */
-//   onReady: function () {
-  
-//   },
-
-//   /**
-//    * 生命周期函数--监听页面显示
-//    */
-//   onShow: function () {
-  
-//   },
-
-//   /**
-//    * 生命周期函数--监听页面隐藏
-//    */
-//   onHide: function () {
-  
-//   },
-
-//   /**
-//    * 生命周期函数--监听页面卸载
-//    */
-//   onUnload: function () {
-  
-//   },
-
-//   /**
-//    * 页面相关事件处理函数--监听用户下拉动作
-//    */
-//   onPullDownRefresh: function () {
-  
-//   },
-
-//   /**
-//    * 页面上拉触底事件的处理函数
-//    */
-//   onReachBottom: function () {
-  
-//   },
-
-//   /**
-//    * 用户点击右上角分享
-//    */
-//   onShareAppMessage: function () {
-  
-//   }
-// })

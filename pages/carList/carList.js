@@ -19,8 +19,8 @@ Page({
   //流程化请求
   promiseRequest: function () {
     var that = this;
-    app.sessionid().then(function (res) {
-      app.globalData.sessionid = res;
+    app.loginInfo().then(function (res) {
+      app.globalData.loginInfo = res;
       return that.cardList();
     }).then(function (res) {
       console.log(res)

@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    companyInfo:[],//公司基本信息
     typeList:[],
     goodsList:[],
     currType:'',//默认为空查询全部商品
@@ -14,8 +15,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.companyInfo();
     this.typeList();
     this.goodsList();
+  },
+  //查询公司基本信息
+  companyInfo:function(){
+    var that = this;
+    var url = app.d.hostUrl + 'company/basicInfo';
+    var data = { 'company_id': app.globalData.companyId };
+    app.http(url, data, 'get', function (res) {
+      that.setData({ 'companyInfo': res.data });
+    })
   },
   //查询分类列表
   typeList:function(){

@@ -1,9 +1,11 @@
 {
-  "pages": [
-    
+  "pages": [ 
+    "pages/index/index",
     "pages/carList/carList",
     "pages/index/chat/chat",
-    "pages/index/index",
+    
+    
+    
     "pages/product/product",
     "pages/dynamic/dynamic",
     "pages/uccn/uccn",
@@ -57,5 +59,6 @@
         "selectedIconPath": "/images/uccn1.png"
       }
     ]
-  }
+  },
+  "workers": "workers"
 }

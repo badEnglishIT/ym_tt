@@ -9,12 +9,11 @@ App({
     // sessionid: '',//通信ID
     // staffId: '',//员工ID
     // companyId: '',//公司ID
-    sessionid: 't15nVlrMxSrbtYyK3X8X7y0EZS4cPfP8jgGEd8zG1diBIRe5PX3nxdaMX80FPV85',//通信ID
+    //sessionid: '47973dMzA0NDQmKh4aCgclRkdyO3ByZjQGUCUsX20lPQ',//通信ID
     staffId:83,//员工ID
     companyId:1,//公司ID
     loginInfo: {//登录用户的基本信息
-      id: 83,
-      nickname: '123'
+      id: 84, sessionid: "bfa474MzA0NDQkLx0ZCwclRkdyO3ByZjQGUCUsX20lPQ", nickname: "独@步", photo: "https://wx.qlogo.cn/mmopen/vi_32/H8OEe2PXBInNuOBMW…LXUXiaH8rGUs1qKvwXuapRDwQY9tstmrRXDfiazcYERxQ/132"
     },
   },  
   onLaunch: function () {
@@ -29,7 +28,7 @@ App({
     var that = this;
     var thAM=arguments;
     var data = thAM[1];
-    data.sessionid = that.globalData.sessionid;
+    data.sessionid = that.globalData.loginInfo.sessionid;
     wx.request({
       method: thAM[2],
       url: thAM[0],
@@ -46,7 +45,7 @@ App({
           //重新登录
           that.loginApi().then(function(res){
             console.log(res);
-            that.globalData.sessionid=res.data;
+            that.globalData.loginInfo=res.data;
             that.http.apply(null,thAM);
           }).catch(function(res){
             console.log(res);
@@ -64,13 +63,13 @@ App({
       }
     })
   },
-  //获取登录凭证
-  sessionid: function () {
+  //获取用户登录信息
+  loginInfo: function () {
     var that=this;
     return new Promise(function (resolve, reject) {
       //尝试读取缓存
       wx.getStorage({
-        key: 'sessionid',
+        key: 'loginInfo',
         success: function (res) {
           resolve(res.data)
         },
@@ -102,8 +101,8 @@ App({
             success: function (res) {
               var res = res.data;
               if (res.code == 200) {
-                //写入缓存
-                wx.setStorage({ key: 'sessionid', data: res.data });
+                //缓存用户登录信息
+                wx.setStorage({ key: 'loginInfo', data: res.data });
                 resolve(res);
               } else {
                 reject(res.msg);

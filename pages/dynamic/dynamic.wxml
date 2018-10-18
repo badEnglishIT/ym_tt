@@ -1,11 +1,12 @@
 <!--pages/dynamic/dynamic.wxml-->
 <view hidden='{{murky}}' bindtap='close' class='murky' id='murky'></view>
 <scroll-view style='height:100vh' lower-threshold='50' bindscrolltolower='loadMore' scroll-y class='page'>
-  <view wx:for='{{allDynamic}}' class='dynamic'>
-    <image src='{{item.photo}}'></image>
+  <view wx:for='{{list}}' wx:if="{{item.uid}}" class='dynamic'>
+    <image src='{{staffInfo.photo}}'></image>
     <view class='box'>
       <view class='a'>
-        <text style='color:#626F9C;font-weight: 600;'>{{item.nickname}}</text>
+        <text style='color:#626F9C;font-weight: 600;'>
+        {{staffInfo.nickname}}</text>
         <text style='color:#626F9C;font-size:.6rem'>转发</text>
       </view>
       <view class='t'>{{item.details}}</view>

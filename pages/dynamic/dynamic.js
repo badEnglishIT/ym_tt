@@ -25,43 +25,37 @@ Page({
         loading: false
       }
     ],
-    allDynamic: [
-      {
-        "id": 8, "details": "\u6492\u6253\u53d1\u6492\u6253\u53d1\u7b2c\u4e09\u65b9", 
-        "imgs": null, "user_like": { "83": "123" }, "add_time": "2018-10-06 14:41", 
-        "photo": "http:\/\/push.com\/static\/images\/photo\/20180928\/JN153l8r1M04F802.png", 
-        "commList": [], "nickname": "123", "is_like": 1, "showLike": true
-      },
-      { 
-        "id": 7, "details": "\u963f\u65af\u987f\u53d1\u662f\u7684\u6492\u53d1\u751f", 
-        "imgs": null, "user_like": [], "add_time": "2018-10-06 14:40", "commList": [], 
-        "photo": "http:\/\/push.com\/static\/images\/photo\/20180928\/JN153l8r1M04F802.png", 
-        "nickname": "123",  "is_like": 0 
-      }, 
-      { 
-        "id": 6, "details": "\u963f\u9053\u592b", "imgs": null, "user_like": [], 
-        "add_time": "2018-10-06 14:09", "commList": [], "nickname": "123", 
-        "photo": "http:\/\/push.com\/static\/images\/photo\/20180928\/JN153l8r1M04F802.png", "is_like": 0 
-      }, 
-      { 
-        "id": 3, "details": "\u963f\u65af\u987f\u53d1", "user_like": [],
-        "imgs": ['https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1348489678,3535316951&fm=11&gp=0.jpg'],
-        "add_time": "2018-10-06 12:44", "commList": [], "nickname": "123", 
-        "photo": "http:\/\/push.com\/static\/images\/photo\/20180928\/JN153l8r1M04F802.png", "is_like": 0 
-      }, 
-      {
-        "id": 2, "details": "郭她采了个洁", "user_like": [], 
-        "imgs": [
-          'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2534260202,508591724&fm=26&gp=0.jpg',
-          'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=823085869,1644233068&fm=26&gp=0.jpg',
-          'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3642968723,959289097&fm=26&gp=0.jpg',
-          'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=620087452,772181271&fm=26&gp=0.jpg',
-          // 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=916379520,3005327835&fm=26&gp=0.jpg'
-        ], 
-        "add_time": "2018-09-18 11:05", "commList": [{ "dy_id": 2, "msg": "234", "nickname": "123" }], 
-        "nickname": "123", "photo": "http:\/\/push.com\/static\/images\/photo\/20180928\/JN153l8r1M04F802.png", "is_like": 0
-      }
-    ]
+    //员工信息
+    staffInfo:[],
+    //动态列表
+    list:[],
+  },
+  //查询员工信息
+  staffInfo:function(){
+    var that=this;
+    var url=app.d.hostUrl+'company/staffInfo';
+    var data={
+      'staff_id':app.globalData.staffId,
+      'company_id':app.globalData.companyId
+    };
+    app.http(url,data,'get',function(res){
+      console.log(res)
+      that.setData({staffInfo:res.data})
+    })
+  },
+  //查询动态列表
+  dynamicList:function(){
+    var that=this;
+    var url = app.d.hostUrl + 'Dynamic/lists';
+    var data = {
+      'staff_id': app.globalData.staffId,
+      'company_id': app.globalData.companyId,
+      'page':1,
+    };
+    app.http(url, data, 'get', function (res) {
+      console.log(res)
+      that.setData({list:res.data});
+    })
   },
   //点击图片预览
   preview:function(e){
@@ -145,5 +139,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {}
+  onLoad: function (options) {
+    this.staffInfo();
+    this.dynamicList();
+    console.log(this.data)
+  }
 })

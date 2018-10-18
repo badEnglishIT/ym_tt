@@ -1,8 +1,8 @@
 <!--pages/goods/details/details.wxml-->
 <import src="../wxParse/wxParse.wxml"/>
 <view class='iconBar'>
-  <icon bindtap='toShoppingCart' class='iconfont icon-gouwuche'></icon>
-  <icon class='iconfont icon-weibiaoti2fuzhi12'></icon>
+  <!-- <icon bindtap='toShoppingCart' class='iconfont icon-gouwuche'></icon>
+  <icon class='iconfont icon-weibiaoti2fuzhi12'></icon> -->
   <icon class='iconfont icon-share'></icon>
 </view>
 <swiper class='swiper_box' indicator-dots='true' autoplay='true' circular='true'>
