@@ -40,7 +40,11 @@ Page({
     wx.showTabBar();
     var that = this;
     var url = app.d.hostUrl + 'Company/staffDetails';
-    app.http(url, { id: app.globalData.staffId }, 'get', function (res) {
+    var data = {
+      id: app.globalData.staffId,
+      company_id: app.globalData.companyId,
+    };
+    app.http(url, data, 'get', function (res) {
       var data=res.data;
       console.log(data);
       that.setData({ 

@@ -1,27 +1,21 @@
 {
-  "pages": [ 
-    "pages/index/index",
-    "pages/carList/carList",
-    "pages/index/chat/chat",
+  "pages": [
     
-    
-    
-    "pages/product/product",
     "pages/dynamic/dynamic",
+    "pages/carList/carList",
+    "pages/product/product",
+    "pages/index/index",
+    "pages/index/chat/chat",    
+    
     "pages/uccn/uccn",
     "pages/product/detail/detail",   
     "pages/index/posterCard",
     "pages/companyList/companyList",
     "component/getUserInfo/getUserInfo",
     "pages/carList/staffList/staffList",
-   
-    "pages/product/personal/personal",
-    
-   
+    "pages/product/personal/personal",    
     "pages/shoppingCart/shoppingCart",
-    "pages/index/chatRoom/chatRoom",
-    
-    
+    "pages/index/chatRoom/chatRoom",     
     "pages/logs/logs"
   ],
   "window": {

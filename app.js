@@ -5,49 +5,53 @@ App({
     hostUrl: 'http://push.com/api/', //请求的主域名
   },
   globalData: {
-    userInfo: '',//用户的基本信息
+    userInfo: '', //用户的基本信息
     // sessionid: '',//通信ID
     // staffId: '',//员工ID
     // companyId: '',//公司ID
     //sessionid: '47973dMzA0NDQmKh4aCgclRkdyO3ByZjQGUCUsX20lPQ',//通信ID
-    staffId:83,//员工ID
-    companyId:1,//公司ID
-    loginInfo: {//登录用户的基本信息
-      id: 84, sessionid: "bfa474MzA0NDQkLx0ZCwclRkdyO3ByZjQGUCUsX20lPQ", nickname: "独@步", photo: "https://wx.qlogo.cn/mmopen/vi_32/H8OEe2PXBInNuOBMW…LXUXiaH8rGUs1qKvwXuapRDwQY9tstmrRXDfiazcYERxQ/132"
+    staffId: 83, //员工ID
+    companyId: 1, //公司ID
+    loginInfo: { //登录用户的基本信息
+      id: 86,
+      nickname: "_vip百事",
+      photo: "https://wx.qlogo.cn/mmopen/vi_32/1k07XXficgZH76eqGnB2bicfjkok3vKictticdapvIqBfxbK6IUaJcXHx34DsAMjFXAdf0gv3oeISpKTkE37FgcZIQ/132",
+      sessionid: "Vejq15A3OQOfy9Od8klI5B43q9xPP8qDQsXmuydj50iHEWeioLwB00c0qaXzADj0",
     },
-  },  
-  onLaunch: function () {
   },
+  onLaunch: function() {},
   //封装请求
   //参数1:路径
   //参数2:请求参数
   //参数3:请求类型
   //参数4:成功回调函数(函数名为error时为失败回调函数,可选)
   //参数5:失败回调函数(可选)
-  http: function () {
+  http: function() {
     var that = this;
-    var thAM=arguments;
+    var thAM = arguments;
     var data = thAM[1];
     data.sessionid = that.globalData.loginInfo.sessionid;
     wx.request({
       method: thAM[2],
       url: thAM[0],
       data: data,
-      header: { "Content-Type": "application/x-www-form-urlencoded" },
-      success: function (res) {
-        var res = res.data;  
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function(res) {
+        var res = res.data;
         if (res.code == 200) {
-          if (thAM[3] && thAM[3]['name'] != 'error') {  
+          if (thAM[3] && thAM[3]['name'] != 'error') {
             thAM[3](res)
           }
         } else if (res.code == 202) {
           console.log('登录已失效');
           //重新登录
-          that.loginApi().then(function(res){
+          that.loginApi().then(function(res) {
             console.log(res);
-            that.globalData.loginInfo=res.data;
-            that.http.apply(null,thAM);
-          }).catch(function(res){
+            that.globalData.loginInfo = res.data;
+            that.http.apply(null, thAM);
+          }).catch(function(res) {
             console.log(res);
           })
         } else {
@@ -58,25 +62,25 @@ App({
           }
         }
       },
-      fail: function () {
+      fail: function() {
         that.error('网络错误');
       }
     })
   },
   //获取用户登录信息
-  loginInfo: function () {
-    var that=this;
-    return new Promise(function (resolve, reject) {
+  loginInfo: function() {
+    var that = this;
+    return new Promise(function(resolve, reject) {
       //尝试读取缓存
       wx.getStorage({
         key: 'loginInfo',
-        success: function (res) {
+        success: function(res) {
           resolve(res.data)
         },
-        fail: function () {
-          that.loginApi().then(function(res){
+        fail: function() {
+          that.loginApi().then(function(res) {
             resolve(res.data)
-          }).catch(function(res){
+          }).catch(function(res) {
             reject(res);
           })
         }
@@ -84,9 +88,9 @@ App({
     })
   },
   //调用登录接口
-  loginApi:function(){
-    var that=this;
-    return new Promise(function (resolve, reject) {
+  loginApi: function() {
+    var that = this;
+    return new Promise(function(resolve, reject) {
       wx.login({
         success: res => {
           var data = that.globalData.userInfo;
@@ -98,11 +102,14 @@ App({
             header: {
               "Content-Type": "application/x-www-form-urlencoded"
             },
-            success: function (res) {
+            success: function(res) {
               var res = res.data;
               if (res.code == 200) {
                 //缓存用户登录信息
-                wx.setStorage({ key: 'loginInfo', data: res.data });
+                wx.setStorage({
+                  key: 'loginInfo',
+                  data: res.data
+                });
                 resolve(res);
               } else {
                 reject(res.msg);
@@ -114,19 +121,19 @@ App({
     })
   },
   //提示窗口
-  tishi: function (msg, callback) {
+  tishi: function(msg, callback) {
     wx.showModal({
       title: '提示',
       showCancel: false,
       content: msg,
-      success: function (res) {
+      success: function(res) {
         typeof callback == "function" && callback(res);
       }
     })
   },
   //格式化HTML字符串
-  formattedHTML:function(html){
-    return html.replace(/<[a-z]+/g, function (str) {
+  formattedHTML: function(html) {
+    return html.replace(/<[a-z]+/g, function(str) {
       switch (str) {
         case '<img':
           return '<img style="max-width:100%"';

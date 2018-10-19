@@ -49,7 +49,7 @@ const msg={
       'from_uid': app.globalData.loginInfo.id,
       'to_uid': app.globalData.staffId,
       'grade': 'user',
-      'key': app.globalData.loginInfo.sessionid
+      'key': app.globalData.loginInfo.socket
     };
     this.send(data);
   },
@@ -85,9 +85,15 @@ Page({
       //发送心跳
       if (res.handle == 'ping') msg.ping();
     })
-    //创建WebSocket
-    wx.connectSocket({
-      url:"wss://dc.ymhmjj.com:4431/webSocketServer?token="+this.token(),
+    wx.request({
+      url: app.d.hostUrl + 'index/time',
+      success: function (res) {
+        //创建WebSocket
+        wx.connectSocket({
+          url: "wss://dc.ymhmjj.com:4431/webSocketServer?token="
+            + that.token(res.data),
+        })
+      }
     })
     //连接WebSocket成功
     wx.onSocketOpen(function(e){
@@ -129,7 +135,7 @@ Page({
     })
   },
   //获取WebSocket通讯凭证
-  token:function(){
+  token:function(time){
     var text = app.globalData.loginInfo.sessionid + (Date.parse(new Date()) / 1000);
     //注意密钥的个数是4的倍数
     var key = CryptoJS.enc.Utf8.parse('1aA.5-x@cxbv7856');
@@ -141,7 +147,7 @@ Page({
     //base64加密编码，避免提交后台的时候包含转义字符导致解码失败 
     return CryptoJS.enc.Base64.stringify(words)
   },
-  onUnload: function () {
+  onUnload:function(){
     // 清除定时器
     timeouts.forEach(item => {
       clearTimeout(item)
