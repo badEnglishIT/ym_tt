@@ -16,8 +16,8 @@
     <view class='set'>
       <text>NO.{{index+1}}</text>
       <view class='setBtn'>
-        <view>置顶</view>
-        <view style='z-index:22' catchtap='shield'>{{murky?'屏蔽':'取消'}}</view>
+        <!-- <view>置顶</view>
+        <view style='z-index:22' catchtap='shield'>{{murky?'屏蔽':'取消'}}</view> -->
       </view>
     </view>
   </view>
