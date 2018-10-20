@@ -71,7 +71,7 @@
 
           <view class='{{ item.imgs.length==1? "p" : item.imgs.length==4? "f" : "m" }}'>
             <image wx:for='{{item.imgs}}' wx:for-item='imgs' data-src="{{imgs}}" bindtap='preview' src='{{imgs}}' 
-            mode='{{imgs.length==1?"aspectFill":"aspectFill"}}'></image>
+            mode='{{item.imgs.length==1?"widthFix":"aspectFill"}}'></image>
           </view>
         </view>
       </view>

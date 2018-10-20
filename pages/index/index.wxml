@@ -104,7 +104,7 @@
     </view>
     <view class='photo'>
       <text style='padding:.5rem 1rem;background:#fff;'>我的照片</text>
-      <image src='{{item}}' mode='aspectFill' 
+      <image src='{{item}}' mode='widthFix' 
       wx:for="{{photo_wall}}"></image>
     </view>
   </view>
