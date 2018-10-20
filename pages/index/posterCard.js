@@ -60,7 +60,8 @@ Page({
     //写电话
     var telFLeft=telLeft+iconWidth+10;//电话左边距
     var telFTop=telTop+14;//电话顶部边距
-    ctx.fillText('电话', telFLeft, telFTop);
+    ctx.setFontSize(10);
+    ctx.fillText('电话:', telFLeft, telFTop);
     //画邮箱图标
     var mailLeft=telLeft;//邮箱图标左边距
     var mailTop=telTop+iconHeight+5;//邮箱图标右边距
@@ -69,7 +70,8 @@ Page({
     //写邮箱
     var mailFLeft = telFLeft;//邮箱左边距
     var mailFTop = mailTop+14;//邮箱顶部边距
-    ctx.fillText('邮箱', mailFLeft, mailFTop);
+    ctx.setFontSize(10);
+    ctx.fillText('邮箱:', mailFLeft, mailFTop);
     //写地址图标
     var addressLeft=telLeft;//地址图标左边距
     var addressTop=mailTop+iconHeight+5;//地址图标顶部边距
@@ -78,7 +80,7 @@ Page({
     //写地址
     var addressFLeft=telFLeft;//地址左边距
     var addressFTop=addressTop+14;//地址顶部边距
-    ctx.fillText('地址', addressFLeft, addressFTop);
+    ctx.fillText('地址:', addressFLeft, addressFTop);
     ctx.save();//保存一下剪裁前的图层
     //画圆形二维码
     var qrWidth=100,qrHeight=100;//二维码宽高

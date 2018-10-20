@@ -13,4 +13,9 @@
     </view>
   </view>
 </view>
-<view wx:else>该公司暂无卡片</view>
+<view wx:else class='notfound'>
+ <view style='text-align:center;'>
+  <image src='/images/ym.jpg'></image>
+  <text>该公司暂时没有卡片</text>
+ </view>
+</view>

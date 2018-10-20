@@ -14,6 +14,9 @@ Page({
   shield(){
     this.setData({ murky: !this.data.murky});
   },
+  none(){
+    console.log('已屏蔽');
+  },
   /**
    * 生命周期函数--监听页面加载
    */

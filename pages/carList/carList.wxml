@@ -1,10 +1,10 @@
 <!--pages/carList/carList.wxml-->
 <getUserInfo auth="{{authCall}}"></getUserInfo>
-<view class='page' wx:if="{{list.length}}">
+<view class='page'> 
   <view wx:for="{{list}}" class='cards' data-id="{{item.id}}" 
-  data-company_id="{{item.company_id}}">
-    <view hidden='{{murky}}' bindtap='' class='murky' id='murky'>已屏蔽</view>
-    <view class='info' bindtap="toIndex">
+  data-company_id="{{item.company_id}}" bindtap="toIndex"> 
+    <view hidden='{{murky}}' catchtap='none' class='murky' id='murky'>已屏蔽</view>
+    <view class='info' >
       <view class='infoText'>
         <text class='t1'>{{item.company_name}}</text>
         <text class='t2'>{{item.nickname}}</text>
@@ -17,12 +17,8 @@
       <text>NO.{{index+1}}</text>
       <view class='setBtn'>
         <view>置顶</view>
-        <view style='z-index:22' bindtap='shield'>{{murky?'屏蔽':'取消'}}</view>
+        <view style='z-index:22' catchtap='shield'>{{murky?'屏蔽':'取消'}}</view>
       </view>
     </view>
   </view>
-</view>
-<view wx:else>
-  <!-- <view class='NOTFOUND'>404 NOT FOUND</view>
-  <view style='text-align:center;line-height: 2rem;'>Please authorize</view> -->
 </view>
