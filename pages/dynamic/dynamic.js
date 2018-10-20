@@ -68,7 +68,36 @@ Page({
     };
     app.http(url, data, 'get', function (res) {
       console.log({'res':res})
-      that.setData({list:res.data});
+      // that.setData({list:res.data});
+      //遍历数据列表 更改列表里的一项属性值(时间的显示)
+      res.data.forEach(v => {    //改变时间显示方式
+        var timeArr = v.add_time.split(" ");
+        var oldFormat = v.add_time;
+        var newFormat = oldFormat.replace(new RegExp("-", "g"), "/"); //用正则转换格式
+        var getMs = (new Date(newFormat)).getTime(); //得到毫秒数
+        var nowMs = new Date().getTime();
+        var timeLag = nowMs / 1000 - getMs / 1000;
+        if (timeLag > 86400) {   //判读时间距今超多一天没有
+          v.add_time = timeArr[0];
+        } else {
+          v.add_time = timeArr[1];
+        }
+      });
+      //判断数据量 然后根据数据量控制页底的显示与提示
+      if (that.data.page == 1 && res.data.length < 10) {
+        that.setData({ load: false, tip: '目前没有了', list: that.data.list.concat(res.data) });
+      } else if (res.length < 10) {
+        that.setData({ load: false, tip: '已经到底了', list: that.data.list.concat(res.data) });
+      } else {
+        that.setData({ load: true, tip: '正在加载', list: that.data.list.concat(res.data) });
+      }
+    },function(res){
+      console.log({ '异常': res });
+      if (that.data.page > 1) {
+        that.setData({ load: false, tip: '已经没有了', list: that.data.list.concat(res.data) });
+      } else {
+        that.setData({ load: false, tip: '暂无数据', list: res.data });
+      }
     })
   },
   //点击图片预览
