@@ -6,10 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    murky:true,
     list:[],//卡片列表
     authCall: '',//用户授权成功后的回调函数
   },
-
+  //屏蔽
+  shield(){
+    this.setData({ murky: !this.data.murky});
+  },
   /**
    * 生命周期函数--监听页面加载
    */

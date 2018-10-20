@@ -38,7 +38,7 @@
   </view>
 </view>
 
-<view class='Shopping'>
+<!-- <view class='Shopping'>
   <view class='collection' bindtap="cp_shopping" data-id="{{id}}">
     <image src='/images/home.png'></image>
     <text>收藏</text>
@@ -53,6 +53,14 @@
   </view>
   <view class='immediately' bindtap='setModalStatus' data-status="1">
     <text>立即购买</text>
+  </view>
+</view> -->
+<view class='Shopping'>
+  <view class='cts' style='background:#FF0000;width:100%;padding:0;line-height:49px;'>
+    <!-- <contact-button type="default-light" style='color:#fff;' session-from="weapp">
+      立即咨询
+    </contact-button> -->
+    <button open-type='contact' style='border:none; border-radius:0;margin:0;background:none;color:#fff;'>立即咨询</button>
   </view>
 </view>
 <!-- 立即购买 -->

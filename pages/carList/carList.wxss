@@ -8,6 +8,21 @@ page{
   display: flex;
   flex-flow: column nowrap;
 }
+.murky{
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background:rgba(0,0,0,.4);
+  border-radius: .3rem;
+  /* filter:Alpha(opacity=60); */
+  z-index:11;
+}
 .cards{
   width: 100%;
   height: 30vh;
@@ -16,6 +31,7 @@ page{
   padding: 1rem;
   box-sizing: border-box;
   margin-bottom: 1rem;
+  position: relative;
   box-shadow:0px 0px 10px 2px #DCDCDD;
 }
 .info{
@@ -65,7 +81,7 @@ page{
 }
 .setBtn view{
   font-size: .6rem;
-  color: #ddd;
+  color: #ccc;
   border: 1rpx solid #ddd;
   border-radius: .2rem;
   background: #f8f8f8;

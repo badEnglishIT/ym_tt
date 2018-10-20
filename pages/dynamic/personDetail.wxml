@@ -1,0 +1,52 @@
+<!--pages/dynamic/personDetail.wxml-->
+<view class='personCard'>
+  <view class='left'>
+    <image></image>
+    <view>
+      <text style='color:#626F9C;font-weight:600;'>谢霆锋</text>
+      <text style='color:#575757;'>大客户经理</text>
+    </view>
+  </view>
+  <view class='right'>
+    <view>
+      <text style='color:#626F9C;font-weight:600;'>TA的名片 ></text>
+    </view>
+  </view>
+</view>
+
+<view class='box'>
+  <view class='t'>阿斯顿发生的萨达</view>
+  <view class='{{ item.imgs.length==1? "p" : item.imgs.length==4? "f" : "m" }}'>
+    <image wx:for='{{2}}' wx:key='{{this}}' wx:for-item='imgs' data-src="{{imgs}}" bindtap='preview' src='{{imgs}}' mode='{{imgs.length==1?"aspectFill":"aspectFill"}}'></image>
+  </view>
+  <view class='pl'>
+    <text class='time'>18:00</text>
+    <view class='info'>
+      <view class='infoBox'>
+        <view animation="{{item.id==thisDH?animationData:''}}">
+          <view bindtap='clickLike' data-id='{{item.id}}' data-isLike='{{item.is_like}}' data-index="{{index}}" class='zan'>
+            <icon class='iconfont icon-xin'></icon>
+            <text style='color:#fff;margin-left:.3rem;'>{{item.is_like? "取消":"赞"}}</text>
+          </view>
+          <view bindtap='clickMsg' class='zan'>
+            <icon class='iconfont icon-pinglun'></icon>
+            <text style='color:#fff;margin-left:.3rem;'>评论</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <image src='/images/pl.png' data-id='{{item.id}}' bindtap='showPl'></image>
+  </view>
+  <view wx:if='{{item.showLike||item.commList.length!=0}}' class='ly'>
+    <view wx:if='{{item.showLike}}' class='like'>
+      <icon class='iconfont .icon-xin'></icon>
+      <text wx:for='{{item.user_like}}' wx:key='{{this}}' wx:for-item="user_like">{{user_like}}</text>
+    </view>
+    <view class='message' style='{{item.showLike && item.commList.length!=0? "border-top: 1rpx solid #ccc;":"border-top: none"}}'>
+      <view wx:for='{{item.commList}}' wx:key='{{this}}' wx:for-item="commList">
+        <text style='color: #626F9C; font-weight:600;'>{{commList.nickname}}: </text>
+        <text>{{commList.msg}}</text>
+      </view>
+    </view>
+  </view>
+</view>

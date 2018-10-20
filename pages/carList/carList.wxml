@@ -2,8 +2,9 @@
 <getUserInfo auth="{{authCall}}"></getUserInfo>
 <view class='page' wx:if="{{list.length}}">
   <view wx:for="{{list}}" class='cards' data-id="{{item.id}}" 
-  data-company_id="{{item.company_id}}" bindtap="toIndex">
-    <view class='info'>
+  data-company_id="{{item.company_id}}">
+    <view hidden='{{murky}}' bindtap='' class='murky' id='murky'>已屏蔽</view>
+    <view class='info' bindtap="toIndex">
       <view class='infoText'>
         <text class='t1'>{{item.company_name}}</text>
         <text class='t2'>{{item.nickname}}</text>
@@ -16,7 +17,7 @@
       <text>NO.{{index+1}}</text>
       <view class='setBtn'>
         <view>置顶</view>
-        <view>屏蔽</view>
+        <view style='z-index:22' bindtap='shield'>{{murky?'屏蔽':'取消'}}</view>
       </view>
     </view>
   </view>

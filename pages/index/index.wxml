@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <getUserInfo auth="{{authCall}}" wx:if="{{check}}"></getUserInfo>
 <view bindtap="close">
+<navigator open-type='redirect' url='/pages/carList/carList' class='cardlist'><icon class='iconfont icon-qiabao_xianxing'></icon></navigator>
 <view class='page'>
   <view class='card'>
     <view class='comp'><image src='/images/dynamic1.png'></image>

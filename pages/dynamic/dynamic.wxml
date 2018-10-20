@@ -58,8 +58,8 @@
     </view>
   </view> -->
 
-  <view wx:for='{{list}}' wx:if="{{item.uid}}" class='dynamic1'>
-      <view wx:if='{{false}}' class='companyinfo'>
+  <view wx:for='{{list}}' class='dynamic1'>
+      <view wx:if='{{item.uid>0}}' class='companyinfo'>
         <image src='{{staffInfo.photo}}'></image>
         <view class='partOf'>
           <view class='a'>
@@ -78,11 +78,11 @@
 
       <view wx:else class='personinfo'>
 
-        <image src='{{staffInfo.photo}}'></image>
+        <image src='{{basicInfo.logo}}'></image>
         <view class='partOf'>
           <view class='a'>
             <text style='color:#626F9C;font-weight: 600;'>
-            {{staffInfo.nickname}}</text>
+            {{basicInfo.company_name}}</text>
             <text style='color:#626F9C;font-size:.6rem'>转发</text>
           </view>
           <view class='article' data-id='{{item.id}}' bindtap='toDetail'>

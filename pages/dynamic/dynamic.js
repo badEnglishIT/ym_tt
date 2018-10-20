@@ -27,6 +27,8 @@ Page({
     ],
     //员工信息
     staffInfo:[],
+    //公司信息
+    basicInfo:[],
     //动态列表
     list:[],
   },
@@ -43,7 +45,19 @@ Page({
       that.setData({staffInfo:res.data})
     })
   },
-  //查询动态列表
+  //查询公司基本信息
+  basicInfo:function(){
+    var that = this;
+    var url = app.d.hostUrl + 'company/basicInfo';
+    var data = {
+      'company_id':app.globalData.companyId,
+    };
+    app.http(url, data, 'get', function (res) {
+      console.log({'公司基本信息':res})
+      that.setData({ basicInfo: res.data })
+    })
+  },
+  // 查询动态列表
   dynamicList:function(){
     var that=this;
     var url = app.d.hostUrl + 'Dynamic/lists';
@@ -53,7 +67,7 @@ Page({
       'page':1,
     };
     app.http(url, data, 'get', function (res) {
-      console.log(res)
+      console.log({'res':res})
       that.setData({list:res.data});
     })
   },
@@ -141,6 +155,7 @@ Page({
    */
   onLoad: function (options) {
     this.staffInfo();
+    this.basicInfo();
     this.dynamicList();
     console.log(this.data)
   }
