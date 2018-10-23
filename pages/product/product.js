@@ -10,6 +10,7 @@ Page({
     typeList:[],
     goodsList:[],
     currType:'',//默认为空查询全部商品
+    page: 1,
   }, 
   /**
    * 生命周期函数--监听页面加载
@@ -37,19 +38,36 @@ Page({
       that.setData({'typeList':res.data});
     })
   },
+
+  //下拉加载更多
+  loadMore(e) {
+    var that = this;
+    console.log({ '加载更多': e });
+    var beforePage = that.data.page;
+    console.log({ '之前页': that.data.page });
+    that.setData({ page: that.data.page + 1 });
+    if (that.data.page != beforePage) {
+      that.goodsList();
+    }
+  },
+
   //查询商品列表
   goodsList:function(){
     var that=this;
     var url = app.d.hostUrl + 'Goods/typeGoods';
     var data = { 
       'company_id': app.globalData.companyId ,
-      'page':1,
-      'typeId': this.data.currType,
+      'page':that.data.page,
+      'typeId': that.data.currType,
     };
     app.http(url, data, 'get', function (res) {
-      that.setData({goodsList:res.data});
-    },function(){
-      that.setData({ goodsList: [] });
+      if(that.data.page==1){
+        that.setData({goodsList:res.data});
+      }else{
+        that.setData({ goodsList: that.data.goodsList.concat(res.data) });
+      }
+    },function(res){
+      console.log({ '异常': res });
     })
   },
   /**
@@ -63,9 +81,8 @@ Page({
     var that = this;
     var currType = e.currentTarget.dataset.curr;
     if (currType != this.data.currType) {
-      this.setData({
-        currType: currType,
-      },this.goodsList)   
+      this.setData({currType: currType,page:1})
+      this.goodsList();
     }
   },
   toShoppingCart() {

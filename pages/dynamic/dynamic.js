@@ -32,19 +32,6 @@ Page({
     //动态列表
     list:[],
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    this.staffInfo();
-    this.basicInfo();
-    this.dynamicList();
-    console.log(this.data)
-    this.setData({
-      'loginInfo': app.globalData.loginInfo,
-    })
-    console.log(app.globalData.loginInfo)
-  },
   //查询员工信息
   staffInfo:function(){
     var that=this;
@@ -150,55 +137,65 @@ Page({
   loadMore(e) {
     var that = this;
     console.log({ '加载更多': e });
+    var beforePage = that.data.page;
+    console.log({ '之前页': that.data.page });
     if (that.data.load) {
       that.setData({ page: that.data.page + 1 });
+    }
+    if (that.data.page != beforePage) {
+      that.dynamicList();
     }
   },
   // 跳转到详情
   toDetail(e) {
-    var id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '/pages/dynamic/detail?id='+id,
-    })
+    console.log({ '跳转到详情': e
+    });
   },
   // 点赞
   clickLike(e) {
-    var id = this.data.loginInfo['id'];
-    var nickname = this.data.loginInfo['nickname'];
     var index = e.currentTarget.dataset.index;
-    var list = this.data.list;
-    list[index]['is_like'] = 1;
-    if (list[index]['user_like'].length == undefined) {
-      list[index]['user_like'][id] = nickname;
+    this.data.allDynamic[index]['showLike'] = !this.data.allDynamic[index]['showLike']
+    console.log({ '对了': e, '阿萨德': this.data.allDynamic[index]['showLike'] });
+    var allDynamic = this.data.allDynamic;
+    var id = app.globalData.loginInfo.id;
+    console.log({ '点赞': e });
+    console.log({ "用户id": app.globalData.loginInfo });
+    if (allDynamic[index]['user_like'][id]) {
+      console.log({ '已点赞': allDynamic[index]['user_like'][id] });
+      delete allDynamic[index]['user_like'][id];
+      allDynamic[index].is_like = 0;
+      app.http(app.d.hostUrl + 'Dynamic/noLike', { id: allDynamic[index].id }, 'post');
+      this.setData({ allDynamic: allDynamic })
     } else {
-      list[index]['user_like'] = { [id]: nickname };
+      console.log({ '没点赞': allDynamic[index] })
+      //对象数组     [下标]     [属性]       { [对象属性] :对象值}
+      allDynamic[index]['user_like'] = { [id]: allDynamic[index].nickname };
+      console.log({ 'now': allDynamic[index] });
+      allDynamic[index].is_like = 1;//先本地修改点赞状态
+      app.http(app.d.hostUrl + 'Dynamic/like', { id: e.currentTarget.dataset.id }, 'post');//再将状态发给服务器
+      this.setData({ allDynamic: allDynamic })
     }
-    list[index]['showLike'] = true;
-    var data = { id: list[index].id }
-    app.http(app.d.hostUrl + 'Dynamic/like', data, 'post');
-    this.setData({ list: list });
-  },
-  //取消点赞
-  noLike(e) {
-    var id = this.data.loginInfo['id'];
-    var index = e.currentTarget.dataset.index;
-    var list = this.data.list;
-    list[index]['is_like'] = 0;
-    delete list[index]['user_like'][id];
-    var showLike = false;
-    for (var i in list[index]['user_like']) {
-      showLike = true; break;
-    }
-    list[index]['showLike'] = showLike;
-    var data = { id: list[index].id }
-    app.http(app.d.hostUrl + 'Dynamic/noLike', data, 'post');
-    this.setData({ list: list });
   },
   // 评论留言
   clickMsg(e) {
     console.log(e);
   },
+  // 评论折叠
+  loadAll(e) {
+    console.log(e);
+    this.setData({ condition: !this.data.condition });
+  },
   // 动态请求
   dynamicsRequest() {},
-  
+  //删除当前动态
+  delDynamic(e) {},
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.staffInfo();
+    this.basicInfo();
+    this.dynamicList();
+    console.log(this.data)
+  }
 })

@@ -33,6 +33,9 @@
   text-align: right;
 } */
 /* 标题 */
+.page{
+  
+}
 .title{
   width: 100%;
   height: 5rem;
@@ -97,16 +100,19 @@
   margin-right:.5rem; 
   margin-bottom: .5rem
 }
+.scrollView{
+  width: 100vw;
+}
 /* 选项卡 */
 .swiper-tab{
   background-color: #FFF;
-  width: 100% ;
+  /* width: 100% ; */
   display: flex;
   /* justify-content: space-between; */
   font-size: .8rem;
 }
 .swiper-tab view{
-  /* width: 50%; */
+  width: 4rem;
   height: 2rem;
   box-sizing: border-box; 
   text-align: center;
@@ -117,8 +123,8 @@
   /* border-bottom: 2px solid #F9DCC1; */
 }
 .swiper-tab text{
-  /* width: 100%; */
-  /* height: 3rem; */
+  min-width:4rem;
+  display:block;
 }
 .swiper-tab .on{
   border-bottom: 2px solid #FF9F3F;

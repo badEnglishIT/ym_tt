@@ -1,42 +1,43 @@
 <!--pages/product/product.wxml-->
-<view class='page'>
-  <view class='title'>
-    <view class='companyInfo'>
-      <image src="{{companyInfo.logo}}" class='logo'></image>
+<scroll-view scroll-y lower-threshold='50' bindscrolltolower='loadMore' style='height:100vh'>
+  <view class='page'>
+    <view class='title'>
+      <view class='companyInfo'>
+        <image src="{{companyInfo.logo}}" class='logo'></image>
+        <view>
+          <text class='company_name'>{{companyInfo.company_name}}</text>
+          <text class='authentication'>已认证</text>
+        </view>
+      </view>
       <view>
-        <text class='company_name'>{{companyInfo.company_name}}</text>
-        <text class='authentication'>已认证</text>
+        <icon class='iconfont icon-share'></icon>
       </view>
     </view>
-    <view>
-      <icon class='iconfont icon-share'></icon>
+    <!-- 选项卡 -->
+    <scroll-view scroll-x='{{true}}' class='scrollView'>
+      <view class="swiper-tab">
+        <view class=" {{currType=='' ? 'on' : ''}}" data-curr="" catchtap="swichNav">
+          <text>全部商品</text>
+        </view>
+        <view class="{{currType==index ? 'on' : ''}}" data-curr="{{index}}" catchtap="swichNav" wx:for="{{typeList}}">
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+
+    <!-- 对应选项页 -->
+    <view class='swiper-box'>
+      <!-- 第一页 -->
+      <view class="swiper-items">
+        <navigator wx:for="{{goodsList}}" url="/pages/product/detail/detail?id={{item.id}}" class='product'>
+          <image src='{{item.title_img}}' mode='aspectFill'></image>
+          <view class='money'>
+            <view class='I'>{{item.title}}</view>
+            <view class='III'>￥{{item.price}}</view>
+          </view>
+        </navigator>
+      </view>
     </view>
   </view>
-  <!-- 选项卡 -->
-  <view class="swiper-tab">
-  <view class=" {{currType=='' ? 'on' : ''}}" data-curr=""
-   catchtap="swichNav">
-      <text >全部商品</text>
-    </view> 
-   <view class="{{currType==index ? 'on' : ''}}" data-curr="{{index}}"
-    catchtap="swichNav" wx:for="{{typeList}}">
-      <text >{{item.name}}</text>
-    </view> 
-  </view>
-  <!-- 对应选项页 -->
-  <view class='swiper-box'>
-    <!-- 第一页 -->
-    <view class="swiper-items">
-      <navigator wx:for="{{goodsList}}" url="/pages/product/detail/detail?id={{item.id}}"
-       class='product'>
-        <image src='{{item.title_img}}' mode='aspectFill'></image>
-        <view class='money'>
-          <view class='I'>{{item.title}}</view>
-          <view class='III'>￥{{item.price}}</view>       
-        </view>
-      </navigator>
-    </view> 
-  </view>
-</view>
-
-
+</scroll-view>
