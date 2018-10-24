@@ -7,6 +7,7 @@ Page({
     toggle:false,
     scale:{},
     translateX:{},
+    staffInfo:'',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -15,21 +16,15 @@ Page({
     wx.hideTabBar();
     //员工ID
     if (options.staffId) {
-      app.globalData.staffId = options.staffId
-    }
-    //公司ID
-    if(options.companyId){
-      app.globalData.companyId = options.companyId
-    } 
-    //是否调用登录组件
-    if (options.check) {
+      app.globalData.staffId = options.staffId;
+      app.globalData.companyId = options.companyId;
       this.setData({
-        check: options.check,
+        check: true,
         authCall: this.staffDetails,//已授权回调函数
       });
-    } else {
+    }else{
       this.staffDetails();
-    }
+    } 
     console.log(options);
     console.log(app.globalData);
     
@@ -48,6 +43,7 @@ Page({
       var data=res.data;
       console.log(data);
       that.setData({ 
+        staffInfo:data,
         nickname:data.nickname,//员工昵称
         address:data.address,//公司地址
         company_name:data.company_name,//公司名称
@@ -73,8 +69,10 @@ Page({
   },
   //跳转名片海报页面
   toPosterCard:function(){
+    
+    console.log(this.data.staffInfo);
     wx.navigateTo({
-      url: '/pages/index/posterCard',
+      url: '/pages/index/posterCard?info=' + JSON.stringify(this.data.staffInfo),
     })
   },
   //事件处理函数

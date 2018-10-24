@@ -16,6 +16,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.staffId) {
+      app.globalData.staffId = options.staffId;
+      app.globalData.companyId = options.companyId;
+      this.setData({
+        check: true,
+        authCall: this.init,//已授权回调函数
+      });
+    } else {
+      this.init();
+    } 
+    
+  },
+  init:function(){
     this.companyInfo();
     this.typeList();
     this.goodsList();
