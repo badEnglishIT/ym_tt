@@ -2,7 +2,7 @@
 App({
   //配置
   d: {
-    hostUrl: 'http://push.com/api/', //请求的主域名
+    hostUrl: 'https://push.ymindex.com/api/', //请求的主域名
   },
   globalData: {
     userInfo: '', //用户的基本信息

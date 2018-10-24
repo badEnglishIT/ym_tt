@@ -38,7 +38,7 @@ Page({
     ctx.stroke();
     //剪裁线条区域内的图像
     ctx.clip();
-    ctx.drawImage('http://push.com/static/images/logo/q15r37ym25L04M16.jpeg', photoLeft, photoTop, photoWidth, photoHeight);
+    ctx.drawImage('https://push.ymindex.com/static/simulate/photo/1.jpg', photoLeft, photoTop, photoWidth, photoHeight);
     ctx.restore();//恢复剪裁前的图层，与剪裁后的图层合并
     //写职位
     var titleLeft=photoLeft+photoWidth+10;//职位左边距
@@ -91,7 +91,7 @@ Page({
       qrHeight / 2, 0, 2 * Math.PI); 
     //剪裁线条区域内的图像
     ctx.clip();
-    ctx.drawImage('http://push.com/static/images/card/qrcode.jpg', qrLeft, qrTop, qrWidth, qrHeight);
+    ctx.drawImage('https://push.ymindex.com/static/simulate/qrcode/qrcode.jpg', qrLeft, qrTop, qrWidth, qrHeight);
     ctx.restore();//恢复剪裁前的图层，与剪裁后的图层合并
     //写提示文字
     var TS='长按识别二维码';
