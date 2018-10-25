@@ -17,7 +17,12 @@ const msg={
     this.send(data);
     //增加新的记录值
     var currPage = getCurrentPages(); 
-    currPage[currPage.length - 1].pushChat(data);
+    var node = {
+      'from_uid': app.globalData.loginInfo.id,
+      'info': data,
+      'type': data.type,
+    }
+    currPage[currPage.length - 1].pushChat(node);
   },
   //图片消息
   image: function (src) {
@@ -26,7 +31,12 @@ const msg={
     //增加新的记录值
     data.src = imgDomain+data.src;
     var currPage = getCurrentPages();
-    currPage[currPage.length - 1].pushChat(data);
+    var node = {
+      'from_uid': app.globalData.loginInfo.id,
+      'info': data,
+      'type': data.type,
+    }
+    currPage[currPage.length - 1].pushChat(node);
   },
   //商品消息
   goods: function (title,src,price) {
@@ -40,7 +50,12 @@ const msg={
     //增加新的记录值
     data.title_img = imgDomain + data.title_img;
     var currPage = getCurrentPages();
-    currPage[currPage.length - 1].pushChat(data);
+    var node = {
+      'from_uid': app.globalData.loginInfo.id,
+      'info': data,
+      'type': data.type,
+    }
+    currPage[currPage.length - 1].pushChat(node);
   },
   //心跳消息
   ping: function () {
@@ -91,6 +106,7 @@ Page({
     staffInfo:'',//员工信息
     userInfo:'',//用户信息
     goodsInfo: false,//'是否咨询商品',
+    page:1,
   },
   onLoad: function (options) {
     if(options.type=='goods'){
@@ -135,6 +151,11 @@ Page({
             msg.goods(goodsInfo.title,goodsInfo.title_img,goodsInfo.price);
           }
         break;
+        default:
+          console.log(that.data.staffInfo)
+          data.from_uid=app.globalData.staffId;
+          that.pushChat(data);
+        break;
       }
     })
     //监听WebSocket 服务器的连接关闭
@@ -152,7 +173,7 @@ Page({
   chatList:function (){
     var url = app.d.hostUrl +'chat/chatRecord',that=this;
     var data={
-      page:1,
+      page:this.data.page,
       staff_id:app.globalData.staffId,
       uid:app.globalData.loginInfo.id,
       company_id:app.globalData.companyId,
@@ -177,25 +198,38 @@ Page({
       that.setData({staffInfo:res.data});
     })
   },
+  //查看聊天历史记录
+  history(){
+    var that = this;
+    console.log('查看聊天历史记录');
+    var beforePage = that.data.page;
+    console.log({ '之前页': that.data.page });
+    if (that.data.load) {
+      that.setData({ page: that.data.page + 1 });
+    }
+    if (that.data.page != beforePage) {
+      that.chatList();
+    }
+  },
   //增加聊天内容
   pushChat:function(data){
-    var node = {
-      'from_uid': app.globalData.loginInfo.id,
-      'info': data,
-      'type': data.type,
-    }
+    // var node = {
+    //   'from_uid': app.globalData.loginInfo.id,
+    //   'info': data,
+    //   'type': data.type,
+    // }
     console.log(data);
     var list=this.data.chatList;
     var cnt=list.length-1;
     console.log(cnt)
     if(cnt>=0){
-      list[cnt]['list'].push(node);
+      list[cnt]['list'].push(data);
       console.log(list[cnt]);
     }else{
       var myDate = new Date();
       list = [{ 
         'group_time': myDate.toLocaleString(),
-        'list': [node],
+        'list': [data],
       }]
     }
     this.setData({ chatList:list})
@@ -207,7 +241,7 @@ Page({
   //发送文本内容
   sendMsg:function(){
     msg.text(this.data.msg);
-    this.setData({msg:''});
+    this.setData({ msg: '', chatList: this.data.chatList});
   },
   //发送图片
   upImg:function(){

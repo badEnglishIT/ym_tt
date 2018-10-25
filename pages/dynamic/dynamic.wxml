@@ -14,7 +14,7 @@
           <view class='a'>
             <text style='color:#626F9C;font-weight: 600;'>
             {{staffInfo.nickname}}</text>
-            <button style='color:#626F9C;font-size:.6rem' 
+            <button style='color:#626F9C;font-size:.6rem;margin:0;' 
             open-type='share' data-index="{{index}}">转发</button>
           </view>
           <view class='t'>{{item.details}}</view>
@@ -33,8 +33,8 @@
           <view class='a'>
             <text style='color:#626F9C;font-weight: 600;'>
             {{basicInfo.company_name}}</text>
-            <button style='color:#626F9C;font-size:.6rem' 
-open-type='share' data-index="{{index}}" data-type='company'>转发</button>
+            <button style='color:#626F9C;font-size:.6rem;margin:0;' 
+            open-type='share' data-index="{{index}}" data-type='company'>转发</button>
           </view>
           <view class='article' data-id='{{item.id}}' bindtap='toDetail'>
             <image src='{{item.title_img}}'></image>
