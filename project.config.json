@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -39,7 +39,7 @@
 					"id": 0,
 					"name": "lx",
 					"pathName": "pages/index/index",
-					"query": "staffId=2&companyId=1"
+					"query": "staffId=2&companyId=1&&id=10"
 				}
 			]
 		}

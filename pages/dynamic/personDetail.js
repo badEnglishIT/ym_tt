@@ -1,66 +1,88 @@
 // pages/dynamic/personDetail.js
+var app=getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    staffInfo:'',
+    data:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options);
+    this.setData({ id: options.id });
+    //员工ID
+    if (options.staffId) {
+      wx.hideTabBar();
+      app.globalData.staffId = options.staffId;
+      app.globalData.companyId = options.companyId;
+      this.setData({
+        check: true,
+        authCall: this.init,//已授权回调函数
+      });
+    } else {
+      this.details();
+    }  
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  init: function () {
+    var that = this;
+    app.loginInfo().then(function (res) {
+      app.globalData.loginInfo = res;
+      that.details();
+      that.staffInfo();
+    }).catch(function (res) {
+      app.error('网络错误');
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  //查询员工信息
+  staffInfo: function () {
+    var url = app.d.hostUrl + 'Company/staffInfo', that = this;
+    var data = {
+      'staff_id': app.globalData.staffId,
+      'company_id': app.globalData.companyId,
+    };
+    app.http(url, data, 'get', function (res) {
+      that.setData({ staffInfo: res.data })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  //查询详情
+  details: function () {
+    wx.showTabBar({
+      fail: function (res) {
+        console.log(res)
+      }
+    });
+    var url = app.d.hostUrl + 'Dynamic/personDetails', that = this;
+    var data = {
+      'id': this.data.id,
+      'staffId': app.globalData.staffId,
+      'companyId': app.globalData.companyId,
+    };
+    app.http(url, data, 'get', function (res) {
+      console.log(res);
+      res.data.details = app.formattedHTML(res.data.details);
+      that.setData({ data: res.data })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  //跳转员工页面
+  toStaff: function () {
+    console.log(11)
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.title,
+      path: '/pages/dynamic/personDetail?staffId=' + app.globalData.staffId + '&companyId=' + app.globalData.companyId + '&&id=' + this.data.id,
+    }
   }
 })

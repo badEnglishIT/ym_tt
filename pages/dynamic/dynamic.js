@@ -99,6 +99,14 @@ Page({
         that.setData({ load: false, tip: '暂无数据', list: res.data });
       }
     })
+    //添加查看动态行为
+    var url = app.d.hostUrl + 'Company/behavior';
+    var data = {
+      'staff_id': app.globalData.staffId,
+      'company_id': app.globalData.companyId,
+      'type': 8
+    };
+    app.http(url, data, 'post')
   },
   //点击图片预览
   preview:function(e){
@@ -146,39 +154,82 @@ Page({
       that.dynamicList();
     }
   },
-  // 跳转到详情
+  // 跳转到公司详情
   toDetail(e) {
-    console.log({ '跳转到详情': e
+    console.log({
+      '跳转到详情': e.currentTarget.dataset.id
     });
+    wx.navigateTo({
+      url: 'detail?id=' + e.currentTarget.dataset.id,
+    })
   },
   // 点赞
   clickLike(e) {
+    console.log(app.globalData.loginInfo);
+    var id = app.globalData.loginInfo['id'];
+    var nickname = app.globalData.loginInfo['nickname'];
     var index = e.currentTarget.dataset.index;
-    this.data.allDynamic[index]['showLike'] = !this.data.allDynamic[index]['showLike']
-    console.log({ '对了': e, '阿萨德': this.data.allDynamic[index]['showLike'] });
-    var allDynamic = this.data.allDynamic;
-    var id = app.globalData.loginInfo.id;
-    console.log({ '点赞': e });
-    console.log({ "用户id": app.globalData.loginInfo });
-    if (allDynamic[index]['user_like'][id]) {
-      console.log({ '已点赞': allDynamic[index]['user_like'][id] });
-      delete allDynamic[index]['user_like'][id];
-      allDynamic[index].is_like = 0;
-      app.http(app.d.hostUrl + 'Dynamic/noLike', { id: allDynamic[index].id }, 'post');
-      this.setData({ allDynamic: allDynamic })
+    var list = this.data.list;
+    list[index]['is_like'] = 1;
+    if (list[index]['user_like'].length == undefined) {
+      list[index]['user_like'][id] = nickname;
     } else {
-      console.log({ '没点赞': allDynamic[index] })
-      //对象数组     [下标]     [属性]       { [对象属性] :对象值}
-      allDynamic[index]['user_like'] = { [id]: allDynamic[index].nickname };
-      console.log({ 'now': allDynamic[index] });
-      allDynamic[index].is_like = 1;//先本地修改点赞状态
-      app.http(app.d.hostUrl + 'Dynamic/like', { id: e.currentTarget.dataset.id }, 'post');//再将状态发给服务器
-      this.setData({ allDynamic: allDynamic })
+      list[index]['user_like'] = { [id]: nickname };
     }
+    list[index]['showLike'] = true;
+    var data = { id: list[index].id }
+    app.http(app.d.hostUrl + 'Dynamic/like', data, 'post');
+    this.setData({ list: list });
   },
-  // 评论留言
+  //取消点赞
+  noLike(e) {
+    var id = app.globalData.loginInfo['id'];
+    var index = e.currentTarget.dataset.index;
+    var list = this.data.list;
+    list[index]['is_like'] = 0;
+    delete list[index]['user_like'][id];
+    var showLike = false;
+    for (var i in list[index]['user_like']) {
+      showLike = true; break;
+    }
+    list[index]['showLike'] = showLike;
+    var data = { id: list[index].id }
+    app.http(app.d.hostUrl + 'Dynamic/noLike', data, 'post');
+    this.setData({ list: list });
+  },
+  // 评论
   clickMsg(e) {
-    console.log(e);
+    this.setData({ focus: true });
+    console.log({ '评论': e });
+    this.setData({ currentIndex: e.currentTarget.dataset.index });
+  },
+  //输入评论
+  inputMsg: function (e) {
+    this.setData({ inputValue: e.detail.value });
+  },
+  //确定评论
+  confirmMsg: function () {
+    
+    var index = this.data.currentIndex;
+    var value = this.data.inputValue;
+    var list = this.data.list;
+    console.log(index)
+    console.log(list);
+    var url = app.d.hostUrl + 'Dynamic/comment';
+    var data = { id: list[index]['id'], msg: value }, that = this;
+    console.log(list[index])
+    app.http(url, data, 'post', function (res) {
+      data.nickname = app.globalData.loginInfo.nickname;
+      list[index]['commList'] = list[index]['commList'].concat(data);
+      list[index]['showLike'] = true;
+
+      console.log(list[index]['commList'].concat(data))
+      console.log(res);
+      that.setData({ list: list });
+
+    })
+    this.setData({ inputValue: '' });
+    this.showPl();
   },
   // 评论折叠
   loadAll(e) {
@@ -197,5 +248,22 @@ Page({
     this.basicInfo();
     this.dynamicList();
     console.log(this.data)
+  },
+  onShareAppMessage:function(res){
+    if (res.from === 'button') {
+      console.log(res.target.dataset)
+      var data = res.target.dataset;
+      if(data.type=='company'){
+        return {
+          title: this.data.list[data.index]['title'],
+          path: '/pages/dynamic/detail?staffId=' + app.globalData.staffId + '&companyId=' + app.globalData.companyId + '&&id=' + this.data.list[data.index]['id'],
+        }
+      }else{
+        return {
+          title: this.data.staffInfo.nickname+'的动态',
+          path: '/pages/dynamic/personDetail?staffId=' + app.globalData.staffId + '&companyId=' + app.globalData.companyId + '&&id=' + this.data.list[data.index]['id'],
+        }
+      }
+    }
   }
 })

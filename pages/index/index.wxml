@@ -40,7 +40,7 @@
     <view>
       <text class='t1'>电话</text>
       <text class='t2'>{{tel}}</text>
-      <text class='t3' bindtap='call' data-phone='{{phone}}'>拨打</text>
+      <text class='t3' bindtap='call' data-phone='{{tel}}'>拨打</text>
     </view>
      <view>
       <text class='t1'>微信</text>

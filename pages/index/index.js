@@ -20,19 +20,27 @@ Page({
       app.globalData.companyId = options.companyId;
       this.setData({
         check: true,
-        authCall: this.staffDetails,//已授权回调函数
+        authCall: this.init,//已授权回调函数
       });
     }else{
       this.staffDetails();
-    } 
-    console.log(options);
-    console.log(app.globalData);
-    
-    
+    }  
+  },
+  init:function(){
+    var that=this;
+    app.loginInfo().then(function(res){
+      app.globalData.loginInfo = res;
+      that.staffDetails();
+    }).catch(function(res){
+      app.error('网络错误');
+    })
   },
   //查询员工详情
   staffDetails:function(){
-    wx.showTabBar();
+    wx.showTabBar({fail:function(res){
+      console.log(res)
+    }});
+    console.log('隐藏')
     var that = this;
     var url = app.d.hostUrl + 'Company/staffDetails';
     var data = {
@@ -65,7 +73,20 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    //添加转发名片行为
+    var url = app.d.hostUrl + 'Company/behavior';
+    var data = {
+      'staff_id': app.globalData.staffId,
+      'company_id': app.globalData.companyId,
+      'type': 3
+    };
+    app.http(url, data, 'post')
+    var staffInfo = this.data.staffInfo;
+    
+    return {
+      title: staffInfo.nickname+'的名片',
+      path: 'pages/index/index?staffId=' + app.globalData.staffId + '&companyId=' + app.globalData.companyId,
+    }
   },
   //跳转名片海报页面
   toPosterCard:function(){
@@ -81,6 +102,14 @@ Page({
     wx.makePhoneCall({
       phoneNumber: e.target.dataset.phone,//仅为示例，并非真实的电话号码
       success:function(res){
+        //添加拨电话行为
+        var url = app.d.hostUrl + 'Company/behavior';
+        var data = {
+          'staff_id': app.globalData.staffId,
+          'company_id': app.globalData.companyId,
+          'type': 7
+        };
+        app.http(url, data, 'post')
         console.log('拨打成功');
       }
     });
@@ -125,6 +154,14 @@ Page({
       title:data.job_title,
       success: function (res) {
         console.log('拨打成功');
+        //添加保存手机号行为
+        var url = app.d.hostUrl + 'Company/behavior';
+        var data = {
+          'staff_id': app.globalData.staffId,
+          'company_id': app.globalData.companyId,
+          'type': 9
+        };
+        app.http(url, data, 'post')
       }
     })
   },
@@ -135,6 +172,14 @@ Page({
       success: function (res) {
         wx.getClipboardData({
           success: function (res) {
+            //添加保存微信行为
+            var url = app.d.hostUrl + 'Company/behavior';
+            var data = {
+              'staff_id': app.globalData.staffId,
+              'company_id': app.globalData.companyId,
+              'type': 2
+            };
+            app.http(url, data, 'post')
             console.log(res.data) // data
           }
         })

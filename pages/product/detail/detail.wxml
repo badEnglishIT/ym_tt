@@ -32,9 +32,9 @@
   </view>
   <rich-text nodes="{{details}}"></rich-text>
   <view class='{{tspe==2?"show":"hide"}}'>
+    <!-- <image class='imgs' src='/images/default.jpg'></image>
     <image class='imgs' src='/images/default.jpg'></image>
-    <image class='imgs' src='/images/default.jpg'></image>
-    <image class='imgs' src='/images/default.jpg'></image>
+    <image class='imgs' src='/images/default.jpg'></image> -->
   </view>
 </view>
 
@@ -60,7 +60,7 @@
     <!-- <contact-button type="default-light" style='color:#fff;' session-from="weapp">
       立即咨询
     </contact-button> -->
-    <button open-type='contact' style='border:none; border-radius:0;margin:0;background:none;color:#fff;'>立即咨询</button>
+    <button bindtap='contact' style='border:none; border-radius:0;margin:0;background:none;color:#fff;'>立即咨询</button>
   </view>
 </view>
 <!-- 立即购买 -->

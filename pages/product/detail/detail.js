@@ -38,6 +38,7 @@ Page({
       console.log(details);
       that.setData({
         title:res.data.title,
+        title_img:res.data.title_img,
         price:res.data.price,
         banners:res.data.banners,
         details: details,
@@ -45,10 +46,24 @@ Page({
       })
     })
   },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  //咨询商品
+  contact:function(){
+    //添加咨询商品行为
+    var url = app.d.hostUrl + 'Company/behavior';
+    var data = {
+      'staff_id': app.globalData.staffId,
+      'company_id': app.globalData.companyId,
+      'type': 4
+    };
+    app.http(url, data, 'post');
+    var data={
+      'title': this.data.title,
+      'title_img': this.data.title_img,
+      'price': this.data.price
+    };
+    //跳转聊天页面
+    wx.redirectTo({
+      url:'/pages/index/chat/chat?type=goods&&data='+JSON.stringify(data),
+    })
   }
 })

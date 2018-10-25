@@ -6,18 +6,8 @@ App({
   },
   globalData: {
     userInfo: '', //用户的基本信息
-    // sessionid: '',//通信ID
-    // staffId: '',//员工ID
-    // companyId: '',//公司ID
-    //sessionid: '47973dMzA0NDQmKh4aCgclRkdyO3ByZjQGUCUsX20lPQ',//通信ID
-    staffId: 83, //员工ID
-    companyId: 1, //公司ID
-    loginInfo: { //登录用户的基本信息
-      id: 86,
-      nickname: "_vip百事",
-      photo: "https://wx.qlogo.cn/mmopen/vi_32/1k07XXficgZH76eqGnB2bicfjkok3vKictticdapvIqBfxbK6IUaJcXHx34DsAMjFXAdf0gv3oeISpKTkE37FgcZIQ/132",
-      sessionid: "Vejq15A3OQOfy9Od8klI5B43q9xPP8qDQsXmuydj50iHEWeioLwB00c0qaXzADj0",
-    },
+    //登录用户的基本信息
+    loginInfo: {},
   },
   onLaunch: function() {},
   //封装请求
@@ -149,6 +139,14 @@ App({
           break;
       }
     })
-  }
+  },
+  //错误弹窗
+  error: function (msg) {
+    wx.showToast({
+      title: msg,
+      image: '/images/error.png',
+      duration: 2000
+    })
+  },
 
 })

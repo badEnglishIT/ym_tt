@@ -17,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
     if (options.staffId) {
+      wx.hideTabBar();
       app.globalData.staffId = options.staffId;
       app.globalData.companyId = options.companyId;
       this.setData({
@@ -24,14 +25,29 @@ Page({
         authCall: this.init,//已授权回调函数
       });
     } else {
-      this.init();
+      this.companyInfo();
+      this.typeList();
+      this.goodsList();
     } 
     
   },
   init:function(){
-    this.companyInfo();
-    this.typeList();
-    this.goodsList();
+    var that = this;
+    app.loginInfo().then(function (res) {
+      app.globalData.loginInfo = res;
+      wx.showTabBar({
+        fail: function (res) {
+          console.log(res)
+        }
+      });
+      console.log(res)
+      that.companyInfo();
+      that.typeList();
+      that.goodsList();
+    }).catch(function (res) {
+      app.error('网络错误');
+    })
+    
   },
   //查询公司基本信息
   companyInfo:function(){
@@ -87,7 +103,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    console.log(e);
+    return {
+      title: this.data.companyInfo.company_name + '的商品',
+      path: '/pages/product/product?staffId=' + app.globalData.staffId + '&companyId=' + app.globalData.companyId,
+    }
   },
   // 选项卡
   swichNav: function (e) {
