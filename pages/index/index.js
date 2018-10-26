@@ -69,6 +69,22 @@ Page({
       })
     });
   },
+  getPhone:function(e){
+    var that=this;
+    if(app.globalData.loginInfo.tel){
+      this.toTalk();
+    }
+    console.log(e);
+    if (e.detail.iv){
+      var url = app.d.hostUrl +'company/addTel';
+      app.http(url, { 'data': e.detail.encryptedData,'iv':e.detail.iv},'post'
+      ,function(res){
+        that.toTalk();
+      })
+
+    }
+    
+  },
   /**
    * 用户点击右上角分享
    */

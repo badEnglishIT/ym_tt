@@ -27,10 +27,11 @@
   </view>
 </view>
 
-  <view bindtap='toTalk' class='chat'>
+  <!-- <view bindtap='toTalk' class='chat'>
     <icon class='iconfont icon-icon--'></icon>
     <text>消息</text>
-  </view>
+  </view> -->
+  <button open-type="getPhoneNumber" bindgetphonenumber="getPhone">消息</button>
 
   <view class='more' bindtap='more'>
     <text>{{toggle?'收起以下名片信息':'展开全部名片信息'}}</text>

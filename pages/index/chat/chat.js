@@ -107,8 +107,20 @@ Page({
     userInfo:'',//用户信息
     goodsInfo: false,//'是否咨询商品',
     page:1,
+    scrollTop:'',
+    is_load:true,//是否还有更多
+    is_loadOk:true,//是否加载完成
+    lastTopIndex:0,//记录上次头部的位置
+    showHeight:0,//可见视图的高度
   },
   onLoad: function (options) {
+    var that = this;  
+    //获取节点信息
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({ showHeight: res.windowHeight})
+      },
+    })
     if(options.type=='goods'){
       this.setData({ goodsInfo: JSON.parse(options.data)});
       console.log(JSON.parse(options.data))
@@ -116,7 +128,7 @@ Page({
     console.log(app.globalData);
     this.setData({ userInfo: app.globalData.loginInfo});
     console.log(this.data.chatList);
-    var that=this;  
+    
     //创建worker进程
     worker = wx.createWorker('workers/fib/index.js');
     //获取worker进程返回的消息
@@ -171,6 +183,7 @@ Page({
   },
   //分页查询聊天记录
   chatList:function (){
+    wx.showLoading({ title: '加载中'})
     var url = app.d.hostUrl +'chat/chatRecord',that=this;
     var data={
       page:this.data.page,
@@ -178,14 +191,60 @@ Page({
       uid:app.globalData.loginInfo.id,
       company_id:app.globalData.companyId,
     };
-    app.http(url,data,'get',function(res){
+    app.http(url,data,'get',function(res){ 
       console.log(res);
       if(res.code==200){
-        that.setData({ chatList: that.data.chatList.concat(res.data)})
+        if(that.data.page>1){
+          that.setData({
+            lastTopIndex: res.data.length,
+            chatList: res.data.concat(that.data.chatList),
+            scrollTop: 0,
+          },function(){
+            setTimeout(that.getNodeInfo,100);
+          })
+          console.log(that.data.lastTopIndex);
+        }else{
+          that.setData({
+            chatList: res.data.concat(that.data.chatList),
+            scrollTop: 1000000000000,
+          });
+          wx.hideLoading();
+        }
+        
+        
+        // that.setData({
+        //   chatList: res.data.concat(that.data.chatList),
+        //   scrollTop: 1000000000000,
+        // },function(){
+        //   if (that.data.page > 1) {
+        //     that.getNodeInfo();
+        //   }else{
+        //     wx.hideLoading()
+        //   }
+        // })
       }
       
+    },function(){
+      wx.hideLoading();
+      that.setData({is_load:false});
+    })
+    
+  },
+  getNodeInfo:function(){
+    var that=this;
+    const query = wx.createSelectorQuery()
+    query.select('.head-node').boundingClientRect()
+    query.selectViewport().scrollOffset()
+    query.exec(function (res) {
+      wx.hideLoading()
+      that.setData({ 
+        scrollTop: res[0].top  ,
+        is_loadOk: true,
+      });
+      console.log(res)
     })
   },
+  
   //查询员工详情
   staffInfo:function(){
     var url = app.d.hostUrl +'company/staffInfo',that=this;
@@ -201,23 +260,14 @@ Page({
   //查看聊天历史记录
   history(){
     var that = this;
-    console.log('查看聊天历史记录');
-    var beforePage = that.data.page;
-    console.log({ '之前页': that.data.page });
-    if (that.data.load) {
-      that.setData({ page: that.data.page + 1 });
-    }
-    if (that.data.page != beforePage) {
+    if(this.data.is_load&&this.data.is_loadOk){
+      that.setData({ 'is_loadOk': false,page: that.data.page + 1 });
       that.chatList();
     }
+    console.log('查看聊天历史记录');
   },
   //增加聊天内容
   pushChat:function(data){
-    // var node = {
-    //   'from_uid': app.globalData.loginInfo.id,
-    //   'info': data,
-    //   'type': data.type,
-    // }
     console.log(data);
     var list=this.data.chatList;
     var cnt=list.length-1;
@@ -232,7 +282,10 @@ Page({
         'list': [data],
       }]
     }
-    this.setData({ chatList:list})
+    this.setData({ 
+      chatList:list,
+      scrollTop: 1000000 + Math.ceil(Math.random() * 10000),
+    })
   },
   //获取用户输入的内容
   inputMsg:function(e){
