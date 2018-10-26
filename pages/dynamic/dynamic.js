@@ -15,6 +15,9 @@ Page({
     allDynamic: [],
     animationData: {},
     delID: '',
+    condition: false,
+    thisID: 0,
+    opct: false,//输入框透明
     actions: [
       {
         name: '取消'
@@ -120,7 +123,7 @@ Page({
   },
   // 弹出评论
   showPl(e) {
-    this.setData({ show: !this.data.show, murky: !this.data.murky });
+    this.setData({ show: !this.data.show, murky: !this.data.murky, opct: true });
     var animation = wx.createAnimation({     //评论动画   点击弹出缩入
       transformOrigin: "50% 50%",
       duration: 500,
@@ -199,7 +202,7 @@ Page({
   },
   // 评论
   clickMsg(e) {
-    this.setData({ focus: true });
+    this.setData({ focus: true, opct: false});
     console.log({ '评论': e });
     this.setData({ currentIndex: e.currentTarget.dataset.index });
   },
@@ -234,7 +237,7 @@ Page({
   // 评论折叠
   loadAll(e) {
     console.log(e);
-    this.setData({ condition: !this.data.condition });
+    this.setData({ condition: !this.data.condition, thisID: e.currentTarget.dataset.id.id });
   },
   // 动态请求
   dynamicsRequest() {},
