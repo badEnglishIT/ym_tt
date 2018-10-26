@@ -31,7 +31,10 @@
     <icon class='iconfont icon-icon--'></icon>
     <text>消息</text>
   </view> -->
-  <button open-type="getPhoneNumber" bindgetphonenumber="getPhone">消息</button>
+  <button class='chat' open-type="getPhoneNumber" bindgetphonenumber="getPhone">
+    <icon class='iconfont icon-icon--'></icon>
+    <text>消息</text>
+  </button>
 
   <view class='more' bindtap='more'>
     <text>{{toggle?'收起以下名片信息':'展开全部名片信息'}}</text>

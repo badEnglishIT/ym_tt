@@ -79,7 +79,7 @@
       <text>保存名片码</text>
     </view> -->
     <view class='typing'>
-      <textarea adjust-position maxlength='500' fixed='{{true}}' auto-height show-confirm-bar='{{false}}' bindinput='inputMsg' value="{{msg}}"></textarea>
+      <textarea adjust-position maxlength='500' fixed='{{true}}' auto-height show-confirm-bar='{{false}}' bindinput='inputMsg' value="{{msg}}" cursor-spacing='{{12}}'></textarea>
       <view>
         <icon bindtap='upImg' wx:if='{{msg===""}}' style='font-size:1.7rem' class='iconfont icon-add'></icon>
         <text wx:else class='send' catchtap="sendMsg">发送</text>
