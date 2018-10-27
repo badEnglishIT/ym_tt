@@ -94,6 +94,12 @@ Page({
       } else {
         that.setData({ load: true, tip: '正在加载', list: that.data.list.concat(res.data) });
       }
+      //给动态列表 添加一个属性 该属性用于控制页面是否显示点赞栏
+      that.data.list.forEach(v=>{
+        console.log({'vvvv':v});
+        v['showLike'] = Object.keys(v.user_like).length !== 0;
+      });
+      that.setData({ list: that.data.list });
     },function(res){
       console.log({ '异常': res });
       if (that.data.page > 1) {
