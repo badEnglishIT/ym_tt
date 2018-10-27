@@ -114,8 +114,9 @@ Page({
   //点击图片预览
   preview:function(e){
     console.log(e);
-    // wx.previewImage({
-    // });
+    wx.previewImage({
+      urls: e.currentTarget.dataset.src,
+    })
   },
   //评论收起
   close() {
