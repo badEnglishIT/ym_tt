@@ -13,18 +13,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.hideTabBar();
-    //员工ID
-    if (options.staffId) {
-      app.globalData.staffId = options.staffId;
-      app.globalData.companyId = options.companyId;
-      this.setData({
-        check: true,
-        authCall: this.init,//已授权回调函数
-      });
-    }else{
-      this.staffDetails();
-    }  
+    var that=this;
+    wx.hideTabBar({
+      success:function(){
+        //员工ID
+        if (options.staffId) {
+          app.globalData.staffId = options.staffId;
+          app.globalData.companyId = options.companyId;
+          that.setData({
+            check: true,
+            authCall: that.init,//已授权回调函数
+          });
+        } else {
+          that.staffDetails();
+        }
+      }
+    });
+      
   },
   init:function(){
     var that=this;
