@@ -153,8 +153,9 @@ Page({
     })
     //监听WebSocket 接受到服务器的消息
     wx.onSocketMessage(function(e){
+      console.log(e)
       var data = JSON.parse(e.data);
-      console.log(data)
+      
       switch(data.type){
         case 'login':
           var goodsInfo = that.data.goodsInfo;
